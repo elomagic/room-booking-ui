@@ -1,4 +1,24 @@
 {
-    "about": "Über"
+    "about": "Über",
+    "bookable": "Buchbar",
+    "cancel": "Abbrechen",
+    "capacity": "Kapazität",
+    "date-format-weekday": "DD.MM.YYYY, dddd",
+    "display": "Anzeige",
+    "duration": "Dauer",
+    "extend": "Verlängern",
+    "integration": "Integration",
+    "language": "Sprache",
+    "minutes": "Minuten",
+    "name": "Name",
+    "occupied": "Belegt",
+    "occupy": "Belegen",
+    "ok": "Ok",
+    "persons": "Personen",
+    "terminate": "Abbrechen",
+    "terminate-booking": "Buchung Beenden",
+    "terminate-booking-text": "Möchten sie wirklich die aktuelle Buchung beenden?",
+    "time-format-short": "HH:mm",
+    "time-hour-short": "HH:mm"
 }
 
