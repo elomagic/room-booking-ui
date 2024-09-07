@@ -1,3 +1,18 @@
+# Room Booking UI
+
+A tool that ...
+
+---
+
+[![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/apache/maven.svg?label=License)][license]
+[![build workflow](https://github.com/elomagic/room-booking-ui/actions/workflows/npm.yml/badge.svg)](https://github.com/elomagic/room-booking-ui/actions)
+[![GitHub issues](https://img.shields.io/github/issues-raw/elomagic/room-booking-ui)](https://github.com/elomagic/room-booking-ui/issues)
+[![Latest](https://img.shields.io/github/release/elomagic/room-booking-ui.svg)](https://github.com/elomagic/room-booking-ui/releases)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/elomagic/room-booking-ui/graphs/commit-activity)
+[![Buymeacoffee](https://badgen.net/badge/icon/buymeacoffee?icon=buymeacoffee&label)](https://www.buymeacoffee.com/elomagic)
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -48,3 +63,5 @@ export default tseslint.config({
   },
 })
 ```
+
+[license]: https://www.apache.org/licenses/LICENSE-2.0
