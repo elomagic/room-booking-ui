@@ -90,6 +90,7 @@ export const createAdHocAppointment = (durationInMinutes: number): boolean => {
     }
 
     // TODO Save app in backend
+    console.log(newApp);
 
     return true;
 }
