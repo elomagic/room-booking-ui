@@ -1,0 +1,21 @@
+
+.Booked {
+    border-color: red;
+}
+
+.Bookable {
+    border-color: lawngreen;
+}
+
+.Border {
+    border-width: 1em;
+    border-style: solid;
+    border-radius: 2em;
+}
+
+.BorderStatus {
+    border-width: 0.5em;
+    border-style: solid solid solid none;
+    border-radius: 0 2em 2em 0;
+
+}

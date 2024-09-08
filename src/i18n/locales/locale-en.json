@@ -1,3 +1,23 @@
 {
-    "about": "About"
+    "about": "About",
+    "bookable": "Bookable",
+    "cancel": "Cancel",
+    "capacity": "Capacity",
+    "date-format-weekday": "DD.MM.YYYY, dddd",
+    "display": "Display",
+    "duration": "Duration",
+    "extend": "Extend",
+    "integration": "Integration",
+    "language": "Sprache",
+    "minutes": "Minutes",
+    "name": "Name",
+    "occupied": "Occupied",
+    "occupy": "Occupy",
+    "ok": "Ok",
+    "persons": "Persons",
+    "terminate": "Terminate",
+    "terminate-booking": "Terminate Booking",
+    "terminate-booking-text": "Do ya really want to terminate the current booking?",
+    "time-format-short": "HH:mm",
+    "time-hour-short": "h a"
 }
