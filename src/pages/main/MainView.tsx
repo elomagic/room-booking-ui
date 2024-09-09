@@ -1,7 +1,5 @@
-import Grid from '@mui/material/Grid2';
 import "./MainView.css"
 //import reactLogo from '../../assets/react.svg'
-//import viteLogo from '/vite.svg'
 import DigitalClock from "./DigitalClock.tsx";
 import Timeline from "./Timeline.tsx";
 import RoomProperties from "./RoomProperties.tsx";
@@ -9,18 +7,25 @@ import BookingStatus from "./BookingStatus.tsx";
 import Controls from "./Controls.tsx";
 import {useEffect, useState} from "react";
 import {Settings} from "@mui/icons-material";
-import {Fab} from "@mui/material";
-import {Appointment, getAppointmentsOfToday, getCurrentAppointment} from "../../AppointmentManager.ts";
+import {Fab, Stack} from "@mui/material";
+import {
+    Appointment,
+    getAppointmentsOfToday,
+    getCurrentAppointment,
+    getNextAppointment
+} from "../../AppointmentManager.ts";
 
 export default function MainView() {
 
     const [appointmentsToday, setAppointmentsToday] = useState<Appointment[]>([]);
     const [currentAppointment, setCurrentAppointment] = useState<Appointment | null>(null);
+    const [nextAppointment, setNextAppointment] = useState<Appointment | null>(null);
 
     const refreshUI = () => {
         const apps = getAppointmentsOfToday();
         setAppointmentsToday(apps)
         setCurrentAppointment(getCurrentAppointment(apps));
+        setNextAppointment(getNextAppointment(apps));
     };
 
     useEffect(() => {
@@ -28,21 +33,23 @@ export default function MainView() {
             refreshUI();
         }, 5000);
 
+        refreshUI();
+
         return () => clearInterval(interval);
     }, []);
 
     return (
-        <Grid container sx={{ height: "100vh", width: "100%"}} spacing={2} className={"Border " + (currentAppointment ? "Booked" : "Bookable")}>
-            <Grid size={8}>
+        <Stack direction="row" sx={{ height: "calc(100vh - 2em)", width: "calc(100% - 2em)"}} spacing={2} className={"Border " + (currentAppointment ? "Booked" : "Bookable")}>
+            <Stack direction="column" width="66%" paddingRight="0.9em" sx={{ backgroundColor: "#171717" }}>
                 <DigitalClock />
                 <RoomProperties />
-                <BookingStatus appointment={currentAppointment}/>
+                <BookingStatus
+                    appointment={currentAppointment}
+                    nextAppointment={nextAppointment}
+                />
 
                 {/*
                 <div>
-                    <a href="https://vitejs.dev" target="_blank">
-                        <img src={viteLogo} className="logo" alt="Vite logo"/>
-                    </a>
                     <a href="https://react.dev" target="_blank">
                         <img src={reactLogo} className="logo react" alt="React logo"/>
                     </a>
@@ -50,14 +57,14 @@ export default function MainView() {
                 */}
 
                 <Controls bookable={!currentAppointment} />
-            </Grid>
-            <Grid size={4}>
+            </Stack>
+            <Stack direction="column" width="33%">
                 <Timeline appointments={appointmentsToday}/>
-            </Grid>
+            </Stack>
 
             <Fab sx={{ position: "absolute", right: "1em", bottom: "1em" }} href="/settings">
                 <Settings />
             </Fab>
-        </Grid>
+        </Stack>
     );
 }

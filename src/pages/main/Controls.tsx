@@ -52,7 +52,7 @@ export default  function Controls(props: Readonly<ControlsProps>) {
     }
 
     return (
-        <Stack direction="row" spacing={2} margin={3}>
+        <Stack direction="row" spacing={2} margin={3} flexGrow={1} alignItems="end">
             <Fab color="info" variant="extended"><Stack direction="row" spacing={1} onClick={() => setOpenDurationDialog(true)}><MoreTime/><Box>{t(props.bookable ? "occupy" : "extend")}</Box></Stack></Fab>
             {!props.bookable && <Fab color="info" variant="extended"><Stack direction="row" spacing={1} onClick={() => setOpenTerminateDialog(true)}><Cancel/><Box>{t("terminate")}</Box></Stack></Fab>}
 

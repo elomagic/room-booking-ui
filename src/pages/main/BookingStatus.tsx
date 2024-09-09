@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 
 interface BookingStatusProps {
     appointment: Appointment | null;
+    nextAppointment: Appointment | null;
 }
 
 export default  function BookingStatus(props: Readonly<BookingStatusProps>) {
@@ -20,14 +21,15 @@ export default  function BookingStatus(props: Readonly<BookingStatusProps>) {
                 {props.appointment &&
                     <>
                         <Box sx={{ fontSize: "36px" }}>
-                            {dayjs(props.appointment?.start).format(t("time-format-short"))}-{dayjs(props.appointment.end).format(t("time-format-short"))}
+                            {dayjs(props.appointment.start).format(t("time-format-short"))}-{dayjs(props.appointment.end).format(t("time-format-short"))}
                         </Box>
                     <Box sx={{ fontSize: "32px" }}>{props.appointment.subject ?? "No Subject"}</Box>
                     </>
                 }
                 {!props.appointment &&
                     <Box sx={{ fontSize: "36px" }}>
-                        Next appointment begins at xx:xx
+                        {props.nextAppointment && t("next-booking-at", { val: dayjs(props.nextAppointment.start).format(t("time-format-short")) })}
+                        {!props.nextAppointment && t("no-more-bookings-today")}
                     </Box>
                 }
             </Stack>

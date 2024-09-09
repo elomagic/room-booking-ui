@@ -1,7 +1,7 @@
 import {
-    Button,
+    Button, Checkbox,
     Container,
-    FormControl,
+    FormControl, FormControlLabel,
     InputLabel,
     MenuItem,
     Paper,
@@ -18,22 +18,34 @@ export default function SettingsView() {
 
     const { t } = useTranslation();
 
-    const [name, setName] = useState<string>(localStorage.getItem("room.name") ?? "");
     const [language, setLanguage] = useState<string>(localStorage.getItem("language") ?? "en");
+    const [name, setName] = useState<string>(localStorage.getItem("room.name") ?? "");
     const [capacity, setCapacity] = useState<string>(localStorage.getItem("room.capacity") ?? "0");
+    const [microphoneSupport, setMicrophoneSupport] = useState<boolean>("true" === (localStorage.getItem("room.microphoneSupport") ?? "false"));
+    const [screenCastSupport, setScreenCastSupport] = useState<boolean>("true" === (localStorage.getItem("room.screenCastSupport") ?? "false"));
+    const [webCameraSupport, setWebCameraSupport] = useState<boolean>("true" === (localStorage.getItem("room.webCameraSupport") ?? "false"));
+
+    const [url, setUrl] = useState<string>(localStorage.getItem("ext.url") ?? "");
+    const [resourceId, setResourceId] = useState<string>(localStorage.getItem("ext.resourceId") ?? "");
 
     const handleChange = (event: SelectChangeEvent) => {
-        let l = event.target.value
+        const l = event.target.value
         setLanguage(l);
-        dayjs.locale(l)
-        i18n.changeLanguage(l);
-        // TODO localStorage.setItem("language", l);
+
+        i18n.changeLanguage(l)
+            .then(() => dayjs.locale(l));
     };
 
     const handleSaveClick = () => {
         localStorage.setItem("room.name", name);
         localStorage.setItem("room.capacity", capacity);
+        localStorage.setItem("room.screenCastSupport", screenCastSupport ? "true" : "false");
+        localStorage.setItem("room.microphoneSupport", microphoneSupport ? "true" : "false");
+        localStorage.setItem("room.webCameraSupport", webCameraSupport ? "true" : "false");
         localStorage.setItem("language", language);
+
+        localStorage.setItem("ext.url", url);
+        localStorage.setItem("ext.resourceId", resourceId);
     }
 
     return (
@@ -81,12 +93,51 @@ export default function SettingsView() {
                         </Select>
                     </FormControl>
 
+                    <FormControlLabel control={
+                        <Checkbox checked={microphoneSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setMicrophoneSupport(event.target.checked);
+                        }} />} label={t("microphone-support")} />
+
+                    <FormControlLabel control={
+                        <Checkbox checked={screenCastSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setScreenCastSupport(event.target.checked);
+                        }} />} label={t("screencast-support")} />
+
+                    <FormControlLabel control={
+                        <Checkbox checked={webCameraSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setWebCameraSupport(event.target.checked);
+                        }} />} label= {t("webCamera-support")} />
+
                     <Button variant="contained" onClick={handleSaveClick}>Save</Button>
                 </Stack>
             </Paper>
 
             <Paper sx={{mb: 3, p: 2}}>
                 <h2>{t("integration")}</h2>
+
+                <Stack direction="column" spacing={2}>
+                    <FormControl fullWidth>
+                        <TextField
+                            label={t("url")}
+                            value={url}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setUrl(event.target.value);
+                            }}
+                        />
+                    </FormControl>
+
+                    <FormControl fullWidth>
+                        <TextField
+                            label={t("resource-id")}
+                            value={url}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setResourceId(event.target.value);
+                            }}
+                        />
+                    </FormControl>
+
+                    <Button variant="contained" onClick={handleSaveClick}>Save</Button>
+                </Stack>
                 // TODO Calendar integration Google / Outlook / Exchange (OnPrem) / CalDav???
             </Paper>
         </Container>

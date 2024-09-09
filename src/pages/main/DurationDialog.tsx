@@ -33,7 +33,7 @@ export default function DurationDialog(props: Readonly<DurationDialogProps>) {
     }
 
     const handleDecreaseClick = () => {
-        if (duration > 0) {
+        if (duration > 30) {
             setDuration(duration - 30);
         }
     }
@@ -56,7 +56,7 @@ export default function DurationDialog(props: Readonly<DurationDialogProps>) {
                 <DialogContentText>
                     <Stack direction="row" spacing={2} alignItems="center">
                         <Fab onClick={handleDecreaseClick}><Remove/></Fab>
-                        <Chip label={duration + " " + t("minutes")}/>
+                        <Chip label={duration + " " + t("minutes")} sx={{ fontSize: "1.5rem", padding: "1em" }}/>
                         <Fab onClick={handleIncreaseClick}><Add/></Fab>
                     </Stack>
                 </DialogContentText>
