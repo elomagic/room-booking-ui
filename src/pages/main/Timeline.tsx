@@ -46,7 +46,7 @@ export default function Timeline(props: Readonly<TimelineProps>) {
     }, []);
 
     return (
-        <Box overflow="scroll" position="relative" ref={timeline}>
+        <Box overflow="hidden" position="relative" ref={timeline}>
             {panels}
 
             {props.appointments.map((a) => (

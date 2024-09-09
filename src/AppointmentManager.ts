@@ -14,7 +14,10 @@ const currentFloorDay = (): number => {
 }
 
 export const getAppointmentsOfToday = (): Appointment[] => {
-    return [
+
+    const api = localStorage.getItem("ext.api") ?? "demo";
+
+    return api === "demo" ? [
         {
             start: new Date(currentFloorDay() + 9 * 60 * 60_000),
             end: new Date(currentFloorDay() + 12 * 60 * 60_000),
@@ -35,7 +38,9 @@ export const getAppointmentsOfToday = (): Appointment[] => {
             end: new Date(currentFloorDay() + 17.75 * 60 * 60_000),
             subject: "Afterwork Meeting :-)"
         },
-    ];
+    ] : [];
+
+    // TODO Implement missing APIs
 }
 
 export const getCurrentAppointment = (appointments: Appointment[]): Appointment | null => {

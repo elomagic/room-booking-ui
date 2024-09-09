@@ -1,9 +1,12 @@
 {
     "about": "About",
+    "api": "API",
+    "back": "Zurück",
     "bookable": "Bookable",
     "cancel": "Cancel",
     "capacity": "Capacity",
     "date-format-weekday": "MM/DD/YYYY, dddd",
+    "demo-mode": "Demo Mode",
     "display": "Display",
     "duration": "Duration",
     "extend": "Extend",
@@ -17,8 +20,10 @@
     "occupied": "Occupied",
     "occupy": "Occupy",
     "ok": "Ok",
+    "password": "Password",
     "persons": "Persons",
     "resource-id": "Resource ID",
+    "save": "Save",
     "screencast-support": "Screencast Support",
     "terminate": "Terminate",
     "terminate-booking": "Terminate Booking",
@@ -26,5 +31,6 @@
     "time-format-short": "H:mm a",
     "time-hour-short": "h a",
     "url": "URL",
+    "username": "Username",
     "webCamera-support": "WebCamera Support"
 }

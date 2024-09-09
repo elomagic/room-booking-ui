@@ -40,7 +40,7 @@ export default function MainView() {
 
     return (
         <Stack direction="row" sx={{ height: "calc(100vh - 2em)", width: "calc(100% - 2em)"}} spacing={2} className={"Border " + (currentAppointment ? "Booked" : "Bookable")}>
-            <Stack direction="column" width="66%" paddingRight="0.9em" sx={{ backgroundColor: "#171717" }}>
+            <Stack direction="column" width="66%" paddingRight="0.9em" sx={{ backgroundColor: "#171717", "borderRadius": "2em 0 0 2em" }}>
                 <DigitalClock />
                 <RoomProperties />
                 <BookingStatus

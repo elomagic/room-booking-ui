@@ -25,8 +25,11 @@ export default function SettingsView() {
     const [screenCastSupport, setScreenCastSupport] = useState<boolean>("true" === (localStorage.getItem("room.screenCastSupport") ?? "false"));
     const [webCameraSupport, setWebCameraSupport] = useState<boolean>("true" === (localStorage.getItem("room.webCameraSupport") ?? "false"));
 
+    const [api, setApi] = useState<string>(localStorage.getItem("ext.api") ?? "demo");
     const [url, setUrl] = useState<string>(localStorage.getItem("ext.url") ?? "");
     const [resourceId, setResourceId] = useState<string>(localStorage.getItem("ext.resourceId") ?? "");
+    const [username, setUsername] = useState<string>(localStorage.getItem("ext.username") ?? "");
+    const [password, setPassword] = useState<string>(localStorage.getItem("ext.password") ?? "");
 
     const handleChange = (event: SelectChangeEvent) => {
         const l = event.target.value
@@ -46,14 +49,97 @@ export default function SettingsView() {
 
         localStorage.setItem("ext.url", url);
         localStorage.setItem("ext.resourceId", resourceId);
+        localStorage.setItem("ext.api", api);
     }
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Stack direction="row" spacing={2} margin={"1em 0 "} justifyContent="center">
+                <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
+                <Button variant="contained" href="/">{t("back")}</Button>
+            </Stack>
+
+            <Paper sx={{mb: 3, p: 2}}>
+                <h2>{t("integration")}</h2>
+
+                <Stack direction="column" spacing={2}>
+                    <FormControl fullWidth>
+                        <InputLabel id="language-label-id">{t("api")}</InputLabel>
+                        <Select
+                            labelId="anguage-label-id"
+                            label={t("api")}
+                            color="primary"
+                            value={api}
+                            onChange={(event: SelectChangeEvent) => setApi(event.target.value)}
+                            variant="outlined">
+                            <MenuItem value="demo">{t("demo-mode")}</MenuItem>
+                            <MenuItem value="mes">Microsoft EWS (e.g. On-Premises) (Retired by Microsoft)</MenuItem>
+                            <MenuItem value="o365">Office 365 (not implemented yet)</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <FormControl fullWidth>
+                        <TextField
+                            label={t("url")}
+                            value={url}
+                            type="url"
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setUrl(event.target.value);
+                            }}
+                        />
+                    </FormControl>
+
+                    <FormControl fullWidth>
+                        <TextField
+                            label={t("resource-id")}
+                            value={resourceId}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setResourceId(event.target.value);
+                            }}
+                        />
+                    </FormControl>
+
+                    <FormControl fullWidth>
+                        <TextField
+                            label={t("username")}
+                            value={username}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setUsername(event.target.value);
+                            }}
+                        />
+                    </FormControl>
+
+                    <FormControl fullWidth>
+                        <TextField
+                            label={t("password")}
+                            value={password}
+                            type="password"
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setPassword(event.target.value);
+                            }}
+                        />
+                    </FormControl>
+                </Stack>
+            </Paper>
+
             <Paper sx={{ mb: 3, p: 2 }}>
                 <h2>{t("display")}</h2>
 
                 <Stack direction="column" spacing={2}>
+                    <FormControl fullWidth>
+                        <InputLabel id="language-label-id">{t("language")}</InputLabel>
+                        <Select
+                            labelId="anguage-label-id"
+                            label={t("language")}
+                            color="primary"
+                            value={language}
+                            onChange={handleChange}
+                            variant="outlined">
+                            <MenuItem value="en">English (American)</MenuItem>
+                            <MenuItem value="de">German</MenuItem>
+                        </Select>
+                    </FormControl>
+
                     <FormControl fullWidth>
                         <TextField
                             label={t("name")}
@@ -73,24 +159,14 @@ export default function SettingsView() {
                                 setCapacity(event.target.value);
                             }}
                             slotProps={{
+                                htmlInput: {
+                                    min: 0,
+                                },
                                 inputLabel: {
                                     shrink: true,
                                 },
                             }}
                         />
-                    </FormControl>
-                    <FormControl fullWidth>
-                        <InputLabel id="language-label-id">{t("language")}</InputLabel>
-                        <Select
-                            labelId="anguage-label-id"
-                            label={t("language")}
-                            color="primary"
-                            value={language}
-                            onChange={handleChange}
-                            variant="outlined">
-                            <MenuItem value="en" className="LanguageSelector Item">English (American)</MenuItem>
-                            <MenuItem value="de" className="LanguageSelector Item">German</MenuItem>
-                        </Select>
                     </FormControl>
 
                     <FormControlLabel control={
@@ -107,39 +183,13 @@ export default function SettingsView() {
                         <Checkbox checked={webCameraSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             setWebCameraSupport(event.target.checked);
                         }} />} label= {t("webCamera-support")} />
-
-                    <Button variant="contained" onClick={handleSaveClick}>Save</Button>
                 </Stack>
             </Paper>
 
-            <Paper sx={{mb: 3, p: 2}}>
-                <h2>{t("integration")}</h2>
-
-                <Stack direction="column" spacing={2}>
-                    <FormControl fullWidth>
-                        <TextField
-                            label={t("url")}
-                            value={url}
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                setUrl(event.target.value);
-                            }}
-                        />
-                    </FormControl>
-
-                    <FormControl fullWidth>
-                        <TextField
-                            label={t("resource-id")}
-                            value={url}
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                setResourceId(event.target.value);
-                            }}
-                        />
-                    </FormControl>
-
-                    <Button variant="contained" onClick={handleSaveClick}>Save</Button>
-                </Stack>
-                // TODO Calendar integration Google / Outlook / Exchange (OnPrem) / CalDav???
-            </Paper>
+            <Stack direction="row" spacing={2} margin={"1em 0 "} justifyContent="center">
+                <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
+                <Button variant="contained" href="/">{t("back")}</Button>
+            </Stack>
         </Container>
     );
 }
