@@ -22,10 +22,12 @@ export default function MainView() {
     const [nextAppointment, setNextAppointment] = useState<Appointment | null>(null);
 
     const refreshUI = () => {
-        const apps = getAppointmentsOfToday();
-        setAppointmentsToday(apps)
-        setCurrentAppointment(getCurrentAppointment(apps));
-        setNextAppointment(getNextAppointment(apps));
+        getAppointmentsOfToday()
+            .then((apps) => {
+                setAppointmentsToday(apps)
+                setCurrentAppointment(getCurrentAppointment(apps));
+                setNextAppointment(getNextAppointment(apps));
+            });
     };
 
     useEffect(() => {

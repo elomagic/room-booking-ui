@@ -1,22 +1,27 @@
 import {
-    Button, Checkbox,
+    Button,
+    Checkbox,
     Container,
-    FormControl, FormControlLabel,
+    FormControl,
+    FormControlLabel,
     InputLabel,
     MenuItem,
     Paper,
     Select,
-    SelectChangeEvent, Stack,
+    SelectChangeEvent,
+    Stack,
     TextField
 } from "@mui/material";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import dayjs from "dayjs";
 import i18n from "i18next";
+import {encryptString} from "../../stringcrypt.ts";
 
 export default function SettingsView() {
 
     const { t } = useTranslation();
+    const passwordPlaceholder = "do_ya_think_i_am_a_stupid_dev???";
 
     const [language, setLanguage] = useState<string>(localStorage.getItem("language") ?? "en");
     const [name, setName] = useState<string>(localStorage.getItem("room.name") ?? "");
@@ -27,9 +32,9 @@ export default function SettingsView() {
 
     const [api, setApi] = useState<string>(localStorage.getItem("ext.api") ?? "demo");
     const [url, setUrl] = useState<string>(localStorage.getItem("ext.url") ?? "");
-    const [resourceId, setResourceId] = useState<string>(localStorage.getItem("ext.resourceId") ?? "");
     const [username, setUsername] = useState<string>(localStorage.getItem("ext.username") ?? "");
-    const [password, setPassword] = useState<string>(localStorage.getItem("ext.password") ?? "");
+    const [password, setPassword] = useState<string>(passwordPlaceholder);
+    const [resourceId, setResourceId] = useState<string>(localStorage.getItem("ext.resourceId") ?? "");
 
     const handleChange = (event: SelectChangeEvent) => {
         const l = event.target.value
@@ -47,9 +52,14 @@ export default function SettingsView() {
         localStorage.setItem("room.webCameraSupport", webCameraSupport ? "true" : "false");
         localStorage.setItem("language", language);
 
-        localStorage.setItem("ext.url", url);
-        localStorage.setItem("ext.resourceId", resourceId);
         localStorage.setItem("ext.api", api);
+        localStorage.setItem("ext.url", url);
+        localStorage.setItem("ext.username", username);
+        if (passwordPlaceholder !== password) {
+            localStorage.setItem("ext.password", encryptString(password));
+            setPassword(passwordPlaceholder);
+        }
+        localStorage.setItem("ext.resourceId", resourceId);
     }
 
     return (

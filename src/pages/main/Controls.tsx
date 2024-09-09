@@ -30,14 +30,17 @@ export default  function Controls(props: Readonly<ControlsProps>) {
             return;
         }
 
-        const app = getCurrentAppointment(getAppointmentsOfToday());
-        if (app === null) {
-            // TODO Show error if failed
-            createAdHocAppointment(duration);
-        } else {
-            // TODO Show error if failed
-            extendCurrentAppointment(duration);
-        }
+        getAppointmentsOfToday()
+            .then((apps) => getCurrentAppointment(apps))
+            .then((app) => {
+                if (app === null) {
+                    // TODO Show success or error if failed
+                    return createAdHocAppointment(duration);
+                } else {
+                    // TODO Show success or error if failed
+                    return extendCurrentAppointment(duration);
+                }
+            });
     };
 
     const handleTerminateClick = (yesClicked: boolean) => {
@@ -47,12 +50,13 @@ export default  function Controls(props: Readonly<ControlsProps>) {
             return;
         }
 
-        // TODO Show error if failed
+        // TODO Show success or error if failed
         terminateCurrentAppointment();
     }
 
     return (
         <Stack direction="row" spacing={2} margin={3} flexGrow={1} alignItems="end">
+            {/* TODO Show only when user has right to extend or terminate booking */}
             <Fab color="info" variant="extended"><Stack direction="row" spacing={1} onClick={() => setOpenDurationDialog(true)}><MoreTime/><Box>{t(props.bookable ? "occupy" : "extend")}</Box></Stack></Fab>
             {!props.bookable && <Fab color="info" variant="extended"><Stack direction="row" spacing={1} onClick={() => setOpenTerminateDialog(true)}><Cancel/><Box>{t("terminate")}</Box></Stack></Fab>}
 
