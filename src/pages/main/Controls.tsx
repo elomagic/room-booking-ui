@@ -3,13 +3,7 @@ import {Box, Fab, Stack} from "@mui/material";
 import {Cancel, MoreTime} from "@mui/icons-material";
 import {useState} from "react";
 import ConformationDialog from "./ConformationDialog.tsx";
-import {
-    createAdHocAppointment,
-    extendCurrentAppointment,
-    getAppointmentsOfToday,
-    getCurrentAppointment,
-    terminateCurrentAppointment
-} from "../../AppointmentManager.ts";
+import {createProvider} from "../../AppointmentManager.ts";
 import DurationDialog from "./DurationDialog.tsx";
 
 interface ControlsProps {
@@ -30,15 +24,17 @@ export default  function Controls(props: Readonly<ControlsProps>) {
             return;
         }
 
-        getAppointmentsOfToday()
-            .then((apps) => getCurrentAppointment(apps))
+        const provider = createProvider();
+
+        provider.getAppointmentsOfToday()
+            .then((apps) => provider.getCurrentAppointment(apps))
             .then((app) => {
                 if (app === null) {
                     // TODO Show success or error if failed
-                    return createAdHocAppointment(duration);
+                    return provider.createAdHocAppointment(duration);
                 } else {
                     // TODO Show success or error if failed
-                    return extendCurrentAppointment(duration);
+                    return provider.extendCurrentAppointment(duration);
                 }
             });
     };
@@ -51,7 +47,7 @@ export default  function Controls(props: Readonly<ControlsProps>) {
         }
 
         // TODO Show success or error if failed
-        terminateCurrentAppointment();
+        createProvider().terminateCurrentAppointment();
     }
 
     return (

@@ -1,7 +1,7 @@
 import {Box} from "@mui/material";
 import TimelineUnit from "./TimelineUnit.tsx";
-import {Appointment} from "../../AppointmentManager.ts";
 import {useEffect, useRef} from "react";
+import {Appointment} from "../../providers/AppointmentProvider.ts";
 
 interface TimelineProps {
     appointments: Appointment[];
