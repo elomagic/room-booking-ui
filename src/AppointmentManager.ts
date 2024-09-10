@@ -1,9 +1,9 @@
-import {Provider} from "./providers/AppointmentProvider.ts";
+import {AppointmentProvider} from "./providers/AppointmentProvider.ts";
 // import {EwsProvider} from "./providers/EwsProvider.ts";
 import {DemoProvider} from "./providers/DemoProvider.ts";
 import {EwsProxyProvider} from "./providers/EwsProxyProvider.ts";
 
-export const createProvider = (): Provider => {
+export const createProvider = (): AppointmentProvider => {
 
     const api = localStorage.getItem("rb.ext.api") ?? "demo"
 

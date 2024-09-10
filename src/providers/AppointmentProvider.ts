@@ -6,7 +6,7 @@ export interface Appointment {
     subject: string;
 }
 
-export abstract class Provider {
+export abstract class AppointmentProvider {
 
     getCurrentAppointment(appointments: Appointment[]): Appointment | null {
         const currentDate: Date = new Date();
