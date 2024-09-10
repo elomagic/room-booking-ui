@@ -1,6 +1,6 @@
-import {Appointment, Provider} from "./AppointmentProvider.ts";
+import {Appointment, AppointmentProvider} from "./AppointmentProvider.ts";
 
-export class EwsProxyProvider extends Provider {
+export class EwsProxyProvider extends AppointmentProvider {
 
     createHeaders(): Headers {
         // Since this request will send JSON data in the body,

@@ -1,4 +1,4 @@
-import {Appointment, Provider} from "./AppointmentProvider.ts";
+import {Appointment, AppointmentProvider} from "./AppointmentProvider.ts";
 import {v4 as uuidv4} from "uuid";
 
 const currentFloorDay = (): number => {
@@ -10,7 +10,7 @@ const currentFloorDay = (): number => {
     return date.getTime();
 }
 
-export class DemoProvider extends Provider {
+export class DemoProvider extends AppointmentProvider {
 
     createAdHocAppointment(_durationInMinutes: number): Promise<boolean> {
         return Promise.resolve(false);

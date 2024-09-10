@@ -1,7 +1,7 @@
 import * as ews from 'ews-javascript-api';
-import {Appointment, Provider} from "./AppointmentProvider.ts";
+import {Appointment, AppointmentProvider} from "./AppointmentProvider.ts";
 
-export class EwsProvider extends Provider {
+export class EwsProvider extends AppointmentProvider {
 
     service: ews.ExchangeService = this.createEwsService();
 
