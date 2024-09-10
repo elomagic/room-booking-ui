@@ -2,7 +2,23 @@
   "name": "room-booking-ui",
   "private": true,
   "version": "0.0.1-SNAPSHOT",
-  "type": "module",
+  "description": "Room Booking Display",
+  "homepage": "https://github.com/elomagic/room-booking-ui",
+  "bugs": {
+    "url": "https://github.com/elomagic/room-booking-ui/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Carsten Rambow"
+  },
+  "funding": {
+    "type": "buyMeACoffee",
+    "url": "https://buymeacoffee.com/elomagic"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elomagic/room-booking-ui.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vitest run && tsc -b && vite build",
