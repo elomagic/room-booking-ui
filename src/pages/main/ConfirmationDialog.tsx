@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grow} from "@mui/material";
 
-interface ConformationDialogProps {
+interface ConfirmationDialogProps {
     uid?: string | undefined;
     open: boolean;
     title?: string|null;
@@ -13,7 +13,7 @@ interface ConformationDialogProps {
     onClick: (okClick: boolean, uid?: string|undefined) => void;
 }
 
-export default function ConformationDialog(props: Readonly<ConformationDialogProps>) {
+export default function ConfirmationDialog(props: Readonly<ConfirmationDialogProps>) {
 
     const { t } = useTranslation();
     const [open, setOpen] = useState(props.open);
@@ -36,7 +36,7 @@ export default function ConformationDialog(props: Readonly<ConformationDialogPro
         <Dialog open={open} onClose={handleNoClick}>
             <DialogTitle>
                 {props.title && <div>{props.title}</div>}
-                {!props.title && t('conformation')}
+                {!props.title && t('confirmation')}
             </DialogTitle>
             <DialogContent>
                 <DialogContentText>{props.text}</DialogContentText>

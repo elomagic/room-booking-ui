@@ -3,12 +3,7 @@ import {Appointment, Provider} from "./AppointmentProvider.ts";
 
 export class EwsProvider extends Provider {
 
-    service: ews.ExchangeService;
-
-    constructor() {
-        super();
-        this.service = this.createEwsService();
-    }
+    service: ews.ExchangeService = this.createEwsService();
 
     createEwsService(): ews.ExchangeService {
         const service = new ews.ExchangeService(ews.ExchangeVersion.Exchange2013);
