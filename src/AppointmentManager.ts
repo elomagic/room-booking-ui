@@ -1,13 +1,14 @@
 import {Provider} from "./providers/AppointmentProvider.ts";
-import {EwsProvider} from "./providers/EwsProvider.ts";
+// import {EwsProvider} from "./providers/EwsProvider.ts";
 import {DemoProvider} from "./providers/DemoProvider.ts";
-import {EwsProxyProvider} from "./providers/EwsProxy.ts";
+import {EwsProxyProvider} from "./providers/EwsProxyProvider.ts";
 
 export const createProvider = (): Provider => {
 
     const api = localStorage.getItem("rb.ext.api") ?? "demo"
+
     if ("ews" === api) {
-        return new EwsProvider();
+        // TODO Test will fail return new EwsProvider();
     } else if ("ews-proxy" === api) {
         return new EwsProxyProvider();
     }
