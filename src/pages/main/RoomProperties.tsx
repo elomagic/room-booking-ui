@@ -7,11 +7,11 @@ export default  function RoomProperties() {
 
     const { t } = useTranslation();
 
-    const [capacity] = useState<string>(localStorage.getItem("room.capacity") ?? "0");
-    const [name] = useState<string>(localStorage.getItem("room.name") ?? "Room name not configured");
-    const [microphoneSupport] = useState<boolean>("true" === (localStorage.getItem("room.microphoneSupport") ?? "false"));
-    const [screenCastSupport] = useState<boolean>("true" === (localStorage.getItem("room.screenCastSupport") ?? "false"));
-    const [webCameraSupport] = useState<boolean>("true" === (localStorage.getItem("room.webCameraSupport") ?? "false"));
+    const [capacity] = useState<string>(localStorage.getItem("rb.room.capacity") ?? "0");
+    const [name] = useState<string>(localStorage.getItem("rb.room.name") ?? "Room name not configured");
+    const [microphoneSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.microphoneSupport") ?? "false"));
+    const [screenCastSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.screenCastSupport") ?? "false"));
+    const [webCameraSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.webCameraSupport") ?? "false"));
 
     return (
         <Container sx={{ lineHeight: "normal"}}>

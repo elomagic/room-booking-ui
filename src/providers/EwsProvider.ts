@@ -12,8 +12,8 @@ export class EwsProvider extends Provider {
 
     createEwsService(): ews.ExchangeService {
         const service = new ews.ExchangeService(ews.ExchangeVersion.Exchange2013);
-        service.Credentials = new ews.WebCredentials(localStorage.getItem("ext.username") ?? "username", localStorage.getItem("ext.password") ?? "secret");
-        service.Url = new ews.Uri(localStorage.getItem("ext.url") ?? "https://localhost:49152/ms-ews-url-not-set");
+        service.Credentials = new ews.WebCredentials(localStorage.getItem("rb.ext.username") ?? "username", localStorage.getItem("rb.ext.password") ?? "secret");
+        service.Url = new ews.Uri(localStorage.getItem("rb.ext.url") ?? "https://localhost:49152/ms-ews-url-not-set");
         return service;
     }
 

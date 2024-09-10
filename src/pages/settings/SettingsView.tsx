@@ -23,18 +23,19 @@ export default function SettingsView() {
     const { t } = useTranslation();
     const passwordPlaceholder = "do_ya_think_i_am_a_stupid_dev???";
 
-    const [language, setLanguage] = useState<string>(localStorage.getItem("language") ?? "en");
-    const [name, setName] = useState<string>(localStorage.getItem("room.name") ?? "");
-    const [capacity, setCapacity] = useState<string>(localStorage.getItem("room.capacity") ?? "0");
-    const [microphoneSupport, setMicrophoneSupport] = useState<boolean>("true" === (localStorage.getItem("room.microphoneSupport") ?? "false"));
-    const [screenCastSupport, setScreenCastSupport] = useState<boolean>("true" === (localStorage.getItem("room.screenCastSupport") ?? "false"));
-    const [webCameraSupport, setWebCameraSupport] = useState<boolean>("true" === (localStorage.getItem("room.webCameraSupport") ?? "false"));
+    const [displayUid] = useState<string>(localStorage.getItem("rb.uid") ?? "error");
+    const [language, setLanguage] = useState<string>(localStorage.getItem("rb.language") ?? "en");
+    const [name, setName] = useState<string>(localStorage.getItem("rb.room.name") ?? "");
+    const [capacity, setCapacity] = useState<string>(localStorage.getItem("rb.room.capacity") ?? "0");
+    const [microphoneSupport, setMicrophoneSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.microphoneSupport") ?? "false"));
+    const [screenCastSupport, setScreenCastSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.screenCastSupport") ?? "false"));
+    const [webCameraSupport, setWebCameraSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.webCameraSupport") ?? "false"));
 
-    const [api, setApi] = useState<string>(localStorage.getItem("ext.api") ?? "demo");
-    const [url, setUrl] = useState<string>(localStorage.getItem("ext.url") ?? "");
-    const [username, setUsername] = useState<string>(localStorage.getItem("ext.username") ?? "");
+    const [api, setApi] = useState<string>(localStorage.getItem("rb.ext.api") ?? "demo");
+    const [url, setUrl] = useState<string>(localStorage.getItem("rb.ext.url") ?? "");
+    const [username, setUsername] = useState<string>(localStorage.getItem("rb.ext.username") ?? "");
     const [password, setPassword] = useState<string>(passwordPlaceholder);
-    const [resourceId, setResourceId] = useState<string>(localStorage.getItem("ext.resourceId") ?? "");
+    const [resourceId, setResourceId] = useState<string>(localStorage.getItem("rb.ext.resourceId") ?? "");
 
     const handleChange = (event: SelectChangeEvent) => {
         const l = event.target.value
@@ -45,21 +46,21 @@ export default function SettingsView() {
     };
 
     const handleSaveClick = () => {
-        localStorage.setItem("room.name", name);
-        localStorage.setItem("room.capacity", capacity);
-        localStorage.setItem("room.screenCastSupport", screenCastSupport ? "true" : "false");
-        localStorage.setItem("room.microphoneSupport", microphoneSupport ? "true" : "false");
-        localStorage.setItem("room.webCameraSupport", webCameraSupport ? "true" : "false");
-        localStorage.setItem("language", language);
+        localStorage.setItem("rb.room.name", name);
+        localStorage.setItem("rb.room.capacity", capacity);
+        localStorage.setItem("rb.room.screenCastSupport", screenCastSupport ? "true" : "false");
+        localStorage.setItem("rb.room.microphoneSupport", microphoneSupport ? "true" : "false");
+        localStorage.setItem("rb.room.webCameraSupport", webCameraSupport ? "true" : "false");
+        localStorage.setItem("rb.language", language);
 
-        localStorage.setItem("ext.api", api);
-        localStorage.setItem("ext.url", url);
-        localStorage.setItem("ext.username", username);
+        localStorage.setItem("rb.ext.api", api);
+        localStorage.setItem("rb.ext.url", url);
+        localStorage.setItem("rb.ext.username", username);
         if (passwordPlaceholder !== password) {
-            localStorage.setItem("ext.password", encryptString(password));
+            localStorage.setItem("rb.ext.password", encryptString(password));
             setPassword(passwordPlaceholder);
         }
-        localStorage.setItem("ext.resourceId", resourceId);
+        localStorage.setItem("rb.ext.resourceId", resourceId);
     }
 
     return (
@@ -73,6 +74,15 @@ export default function SettingsView() {
                 <h2>{t("integration")}</h2>
 
                 <Stack direction="column" spacing={2}>
+                    <FormControl fullWidth>
+                        <TextField
+                            label={t("uid")}
+                            value={displayUid}
+                            type="uid"
+                            disabled={true}
+                        />
+                    </FormControl>
+
                     <FormControl fullWidth>
                         <InputLabel id="language-label-id">{t("api")}</InputLabel>
                         <Select

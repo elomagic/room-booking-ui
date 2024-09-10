@@ -5,7 +5,7 @@ import {EwsProxyProvider} from "./providers/EwsProxy.ts";
 
 export const createProvider = (): Provider => {
 
-    const api = localStorage.getItem("ext.api") ?? "demo"
+    const api = localStorage.getItem("rb.ext.api") ?? "demo"
     if ("ews" === api) {
         return new EwsProvider();
     } else if ("ews-proxy" === api) {
