@@ -5,7 +5,7 @@ import { initReactI18next } from 'react-i18next';
 import dayjs from "dayjs";
 import 'dayjs/locale/de';
 
-let language = localStorage.getItem("language")
+let language = localStorage.getItem("rb.language")
 language = language ?? "en";
 
 const germanTrans = {

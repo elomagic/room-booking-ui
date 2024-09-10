@@ -3,13 +3,7 @@ import {Box, Fab, Stack} from "@mui/material";
 import {Cancel, MoreTime} from "@mui/icons-material";
 import {useState} from "react";
 import ConformationDialog from "./ConformationDialog.tsx";
-import {
-    createAdHocAppointment,
-    extendCurrentAppointment,
-    getAppointmentsOfToday,
-    getCurrentAppointment,
-    terminateCurrentAppointment
-} from "../../AppointmentManager.ts";
+import {createProvider} from "../../AppointmentManager.ts";
 import DurationDialog from "./DurationDialog.tsx";
 
 interface ControlsProps {
@@ -30,14 +24,19 @@ export default  function Controls(props: Readonly<ControlsProps>) {
             return;
         }
 
-        const app = getCurrentAppointment(getAppointmentsOfToday());
-        if (app === null) {
-            // TODO Show error if failed
-            createAdHocAppointment(duration);
-        } else {
-            // TODO Show error if failed
-            extendCurrentAppointment(duration);
-        }
+        const provider = createProvider();
+
+        provider.getAppointmentsOfToday()
+            .then((apps) => provider.getCurrentAppointment(apps))
+            .then((app) => {
+                if (app === null) {
+                    // TODO Show success or error if failed
+                    return provider.createAdHocAppointment(duration);
+                } else {
+                    // TODO Show success or error if failed
+                    return provider.extendCurrentAppointment(duration);
+                }
+            });
     };
 
     const handleTerminateClick = (yesClicked: boolean) => {
@@ -47,12 +46,13 @@ export default  function Controls(props: Readonly<ControlsProps>) {
             return;
         }
 
-        // TODO Show error if failed
-        terminateCurrentAppointment();
+        // TODO Show success or error if failed
+        createProvider().terminateCurrentAppointment();
     }
 
     return (
         <Stack direction="row" spacing={2} margin={3} flexGrow={1} alignItems="end">
+            {/* TODO Show only when user has right to extend or terminate booking */}
             <Fab color="info" variant="extended"><Stack direction="row" spacing={1} onClick={() => setOpenDurationDialog(true)}><MoreTime/><Box>{t(props.bookable ? "occupy" : "extend")}</Box></Stack></Fab>
             {!props.bookable && <Fab color="info" variant="extended"><Stack direction="row" spacing={1} onClick={() => setOpenTerminateDialog(true)}><Cancel/><Box>{t("terminate")}</Box></Stack></Fab>}
 

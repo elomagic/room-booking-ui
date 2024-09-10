@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {Box, Container, Stack} from "@mui/material";
-import {Appointment} from "../../AppointmentManager.ts";
 import dayjs from "dayjs";
+import {Appointment} from "../../providers/AppointmentProvider.ts";
 
 interface BookingStatusProps {
     appointment: Appointment | null;

@@ -8,12 +8,8 @@ import Controls from "./Controls.tsx";
 import {useEffect, useState} from "react";
 import {Settings} from "@mui/icons-material";
 import {Fab, Stack} from "@mui/material";
-import {
-    Appointment,
-    getAppointmentsOfToday,
-    getCurrentAppointment,
-    getNextAppointment
-} from "../../AppointmentManager.ts";
+import {createProvider} from "../../AppointmentManager.ts";
+import {Appointment} from "../../providers/AppointmentProvider.ts";
 
 export default function MainView() {
 
@@ -22,10 +18,14 @@ export default function MainView() {
     const [nextAppointment, setNextAppointment] = useState<Appointment | null>(null);
 
     const refreshUI = () => {
-        const apps = getAppointmentsOfToday();
-        setAppointmentsToday(apps)
-        setCurrentAppointment(getCurrentAppointment(apps));
-        setNextAppointment(getNextAppointment(apps));
+        const provider = createProvider();
+
+        provider.getAppointmentsOfToday()
+            .then((apps) => {
+                setAppointmentsToday(apps)
+                setCurrentAppointment(provider.getCurrentAppointment(apps));
+                setNextAppointment(provider.getNextAppointment(apps));
+            });
     };
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export default function MainView() {
 
     return (
         <Stack direction="row" sx={{ height: "calc(100vh - 2em)", width: "calc(100% - 2em)"}} spacing={2} className={"Border " + (currentAppointment ? "Booked" : "Bookable")}>
-            <Stack direction="column" width="66%" paddingRight="0.9em" sx={{ backgroundColor: "#171717" }}>
+            <Stack direction="column" width="66%" paddingRight="0.9em" sx={{ backgroundColor: "#171717", "borderRadius": "2em 0 0 2em" }}>
                 <DigitalClock />
                 <RoomProperties />
                 <BookingStatus

@@ -1,7 +1,7 @@
 import {Box} from "@mui/material";
 import TimelineUnit from "./TimelineUnit.tsx";
-import {Appointment} from "../../AppointmentManager.ts";
 import {useEffect, useRef} from "react";
+import {Appointment} from "../../providers/AppointmentProvider.ts";
 
 interface TimelineProps {
     appointments: Appointment[];
@@ -46,7 +46,7 @@ export default function Timeline(props: Readonly<TimelineProps>) {
     }, []);
 
     return (
-        <Box overflow="scroll" position="relative" ref={timeline}>
+        <Box overflow="hidden" position="relative" ref={timeline}>
             {panels}
 
             {props.appointments.map((a) => (

@@ -8,10 +8,10 @@ const TAG_POSITION = SALT_LENGTH + IV_LENGTH;
 const ENCRYPTED_POSITION = TAG_POSITION + TAG_LENGTH;
 
 const getSecret = (): string => {
-    let key = localStorage.getItem("masterSecret");
+    let key = localStorage.getItem("rb.masterSecret");
     if (key === null) {
         key = crypto.randomBytes(256).toString("base64");
-        localStorage.setItem("masterSecret", key);
+        localStorage.setItem("rb.masterSecret", key);
     }
 
     return key;
