@@ -10,7 +10,7 @@ export class EwsProxyProvider extends AppointmentProvider {
         // We also need to set the `Accept` header to `application/json`
         // to tell the server that we expect JSON in response
         headers.set('Accept', 'application/json')
-        headers.set('rb-client-uid', localStorage.getItem("rb.uid") ?? "0")
+        headers.set('RB-Resource-ID', localStorage.getItem("rb.ext.resourceId") ?? "0")
 
         return headers;
     }
