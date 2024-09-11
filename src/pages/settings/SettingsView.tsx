@@ -23,7 +23,6 @@ export default function SettingsView() {
     const { t } = useTranslation();
     const passwordPlaceholder = "do_ya_think_i_am_a_stupid_dev???";
 
-    const [displayUid] = useState<string>(localStorage.getItem("rb.uid") ?? "error");
     const [language, setLanguage] = useState<string>(localStorage.getItem("rb.language") ?? "en");
     const [name, setName] = useState<string>(localStorage.getItem("rb.room.name") ?? "");
     const [capacity, setCapacity] = useState<string>(localStorage.getItem("rb.room.capacity") ?? "0");
@@ -74,15 +73,6 @@ export default function SettingsView() {
                 <h2>{t("integration")}</h2>
 
                 <Stack direction="column" spacing={2}>
-                    <FormControl fullWidth>
-                        <TextField
-                            label={t("uid")}
-                            value={displayUid}
-                            type="uid"
-                            disabled={true}
-                        />
-                    </FormControl>
-
                     <FormControl fullWidth>
                         <InputLabel id="language-label-id">{t("api")}</InputLabel>
                         <Select
