@@ -16,7 +16,6 @@ import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import dayjs from "dayjs";
 import i18n from "i18next";
-import {encryptString} from "../../stringcrypt.ts";
 
 export default function SettingsView() {
 
@@ -56,7 +55,7 @@ export default function SettingsView() {
         localStorage.setItem("rb.ext.api", api);
         localStorage.setItem("rb.ext.url", url);
         if (passwordPlaceholder !== apiKey) {
-            localStorage.setItem("rb.ext.password", encryptString(apiKey));
+            localStorage.setItem("rb.ext.apiKey", apiKey);
             setApiKey(passwordPlaceholder);
         }
         localStorage.setItem("rb.ext.resourceId", resourceId);
@@ -83,7 +82,7 @@ export default function SettingsView() {
                             onChange={(event: SelectChangeEvent) => setApi(event.target.value)}
                             variant="outlined">
                             <MenuItem value="demo">{t("demo-mode")}</MenuItem>
-                            <MenuItem value="proxy-ews">Microsoft EWS</MenuItem>
+                            <MenuItem value="ews-proxy">Microsoft EWS</MenuItem>
                         </Select>
                     </FormControl>
 
