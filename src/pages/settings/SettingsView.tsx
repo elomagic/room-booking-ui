@@ -83,7 +83,7 @@ export default function SettingsView() {
                             onChange={(event: SelectChangeEvent) => setApi(event.target.value)}
                             variant="outlined">
                             <MenuItem value="demo">{t("demo-mode")}</MenuItem>
-                            <MenuItem value="proxy-ews">Microsoft EWS</MenuItem>
+                            <MenuItem value="ews-proxy">Microsoft EWS</MenuItem>
                         </Select>
                     </FormControl>
 
