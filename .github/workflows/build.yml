@@ -32,7 +32,7 @@ jobs:
 
       - name: Extract version from package.json
         run: |
-          VERSION=$(npm pkg get version)
+          VERSION=$(npm pkg get version --workspaces=false | tr -d \")
           echo "VERSION=$VERSION" >> $GITHUB_ENV          
 
       - name: Upload Windows service SNAPSHOT
