@@ -1,6 +1,7 @@
 {
     "about": "About",
     "api": "API",
+    "apiKey": "API Key",
     "back": "Zurück",
     "bookable": "Bookable",
     "cancel": "Cancel",
@@ -25,6 +26,7 @@
     "resource-id": "Resource ID",
     "save": "Save",
     "screencast-support": "Screencast Support",
+    "show-terminate-button": "Show Terminate Button",
     "terminate": "Terminate",
     "terminate-booking": "Terminate Booking",
     "terminate-booking-text": "Do ya really want to terminate the current booking?",

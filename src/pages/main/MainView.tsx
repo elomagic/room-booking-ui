@@ -16,6 +16,7 @@ export default function MainView() {
     const [appointmentsToday, setAppointmentsToday] = useState<Appointment[]>([]);
     const [currentAppointment, setCurrentAppointment] = useState<Appointment | null>(null);
     const [nextAppointment, setNextAppointment] = useState<Appointment | null>(null);
+    const [showTerminateButton] = useState<boolean>(localStorage.getItem("rb.room.showTerminateButton") === "true");
 
     const refreshUI = () => {
         const provider = createProvider();
@@ -56,7 +57,7 @@ export default function MainView() {
                 </div>
                 */}
 
-                <Controls bookable={!currentAppointment} />
+                <Controls bookable={!currentAppointment} showTerminate={showTerminateButton} />
             </Stack>
             <Stack direction="column" width="33%">
                 <Timeline appointments={appointmentsToday}/>

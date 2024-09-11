@@ -1,6 +1,7 @@
 {
     "about": "Über",
     "api": "API",
+    "apiKey": "API Key",
     "back": "Zurück",
     "bookable": "Buchbar",
     "cancel": "Abbrechen",
@@ -25,6 +26,7 @@
     "resource-id": "Ressource ID",
     "save": "Speichern",
     "screencast-support": "Screencast Support",
+    "show-terminate-button": "Beenden Button anzeigen",
     "terminate": "Abbrechen",
     "terminate-booking": "Buchung Beenden",
     "terminate-booking-text": "Möchten sie wirklich die aktuelle Buchung beenden?",

@@ -26,14 +26,14 @@ export default function SettingsView() {
     const [language, setLanguage] = useState<string>(localStorage.getItem("rb.language") ?? "en");
     const [name, setName] = useState<string>(localStorage.getItem("rb.room.name") ?? "");
     const [capacity, setCapacity] = useState<string>(localStorage.getItem("rb.room.capacity") ?? "0");
+    const [showTerminateButton, setShowTerminateButton] = useState<boolean>("true" === (localStorage.getItem("rb.room.showTerminateButton") ?? "false"));
     const [microphoneSupport, setMicrophoneSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.microphoneSupport") ?? "false"));
     const [screenCastSupport, setScreenCastSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.screenCastSupport") ?? "false"));
     const [webCameraSupport, setWebCameraSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.webCameraSupport") ?? "false"));
 
     const [api, setApi] = useState<string>(localStorage.getItem("rb.ext.api") ?? "demo");
     const [url, setUrl] = useState<string>(localStorage.getItem("rb.ext.url") ?? "");
-    const [username, setUsername] = useState<string>(localStorage.getItem("rb.ext.username") ?? "");
-    const [password, setPassword] = useState<string>(passwordPlaceholder);
+    const [apiKey, setApiKey] = useState<string>(passwordPlaceholder);
     const [resourceId, setResourceId] = useState<string>(localStorage.getItem("rb.ext.resourceId") ?? "");
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -47,6 +47,7 @@ export default function SettingsView() {
     const handleSaveClick = () => {
         localStorage.setItem("rb.room.name", name);
         localStorage.setItem("rb.room.capacity", capacity);
+        localStorage.setItem("rb.room.showTerminateButton", showTerminateButton ? "true" : "false");
         localStorage.setItem("rb.room.screenCastSupport", screenCastSupport ? "true" : "false");
         localStorage.setItem("rb.room.microphoneSupport", microphoneSupport ? "true" : "false");
         localStorage.setItem("rb.room.webCameraSupport", webCameraSupport ? "true" : "false");
@@ -54,10 +55,9 @@ export default function SettingsView() {
 
         localStorage.setItem("rb.ext.api", api);
         localStorage.setItem("rb.ext.url", url);
-        localStorage.setItem("rb.ext.username", username);
-        if (passwordPlaceholder !== password) {
-            localStorage.setItem("rb.ext.password", encryptString(password));
-            setPassword(passwordPlaceholder);
+        if (passwordPlaceholder !== apiKey) {
+            localStorage.setItem("rb.ext.password", encryptString(apiKey));
+            setApiKey(passwordPlaceholder);
         }
         localStorage.setItem("rb.ext.resourceId", resourceId);
     }
@@ -83,9 +83,7 @@ export default function SettingsView() {
                             onChange={(event: SelectChangeEvent) => setApi(event.target.value)}
                             variant="outlined">
                             <MenuItem value="demo">{t("demo-mode")}</MenuItem>
-                            <MenuItem value="proxy-ews">Microsoft EWS Local Proxy</MenuItem>
-                            <MenuItem value="ews">Microsoft EWS (e.g. On-Premises) (Retired by Microsoft)</MenuItem>
-                            <MenuItem value="o365">Office 365 (not implemented yet)</MenuItem>
+                            <MenuItem value="proxy-ews">Microsoft EWS</MenuItem>
                         </Select>
                     </FormControl>
 
@@ -104,30 +102,16 @@ export default function SettingsView() {
                         <TextField
                             label={t("resource-id")}
                             value={resourceId}
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                setResourceId(event.target.value);
-                            }}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setResourceId(event.target.value)}
                         />
                     </FormControl>
 
                     <FormControl fullWidth>
                         <TextField
-                            label={t("username")}
-                            value={username}
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                setUsername(event.target.value);
-                            }}
-                        />
-                    </FormControl>
-
-                    <FormControl fullWidth>
-                        <TextField
-                            label={t("password")}
-                            value={password}
+                            label={t("apiKey")}
+                            value={apiKey}
                             type="password"
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                setPassword(event.target.value);
-                            }}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setApiKey(event.target.value)}
                         />
                     </FormControl>
                 </Stack>
@@ -155,9 +139,7 @@ export default function SettingsView() {
                         <TextField
                             label={t("name")}
                             value={name}
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                setName(event.target.value);
-                            }}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
                         />
                     </FormControl>
 
@@ -166,9 +148,7 @@ export default function SettingsView() {
                             label={t("capacity")}
                             value={capacity}
                             type="number"
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                setCapacity(event.target.value);
-                            }}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCapacity(event.target.value)}
                             slotProps={{
                                 htmlInput: {
                                     min: 0,
@@ -181,19 +161,28 @@ export default function SettingsView() {
                     </FormControl>
 
                     <FormControlLabel control={
+                        <Checkbox checked={showTerminateButton} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setShowTerminateButton(event.target.checked);
+                        }} />} label={t("show-terminate-button")}
+                    />
+
+                    <FormControlLabel control={
                         <Checkbox checked={microphoneSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             setMicrophoneSupport(event.target.checked);
-                        }} />} label={t("microphone-support")} />
+                        }} />} label={t("microphone-support")}
+                    />
 
                     <FormControlLabel control={
                         <Checkbox checked={screenCastSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             setScreenCastSupport(event.target.checked);
-                        }} />} label={t("screencast-support")} />
+                        }} />} label={t("screencast-support")}
+                    />
 
                     <FormControlLabel control={
                         <Checkbox checked={webCameraSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             setWebCameraSupport(event.target.checked);
-                        }} />} label= {t("webCamera-support")} />
+                        }} />} label= {t("webCamera-support")}
+                    />
                 </Stack>
             </Paper>
 
