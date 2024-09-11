@@ -35,8 +35,8 @@ jobs:
           VERSION=$(npm pkg get version --workspaces=false | tr -d \")
           echo "VERSION=$VERSION" >> $GITHUB_ENV          
 
-      - name: Upload Windows service SNAPSHOT
-        # if: steps.branch-names.outputs.current_branch == 'main'
+      - name: Upload SNAPSHOT files
+        if: steps.branch-names.outputs.current_branch == 'main'
         uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2
         with:
           name: v${{ env.VERSION }}
