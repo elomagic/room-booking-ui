@@ -43,13 +43,13 @@ jobs:
 
       - name: Set and tag next RC version
         run: |
-          npm version prerelease --no-git-tag-version --preid rc  
+          npm version prerelease --preid rc  
 
       - name: Upload released files
         uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2
         with:
           name: ${{ env.VERSION }}
-          tag_name: v${{ env.VERSION }}
+          tag_name: ${{ env.VERSION }}
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: true
           prerelease: true
