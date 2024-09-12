@@ -55,3 +55,8 @@ jobs:
           prerelease: true
           files: |
             dist-zip/*.zip
+
+      - name: Push changes
+        run: |
+          git push
+          
