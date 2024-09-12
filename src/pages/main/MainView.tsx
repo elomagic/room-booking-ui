@@ -10,6 +10,7 @@ import {Settings} from "@mui/icons-material";
 import {Fab, Stack} from "@mui/material";
 import {createProvider} from "../../AppointmentManager.ts";
 import {Appointment} from "../../providers/AppointmentProvider.ts";
+import {Link} from "react-router-dom";
 
 export default function MainView() {
 
@@ -63,9 +64,11 @@ export default function MainView() {
                 <Timeline appointments={appointmentsToday}/>
             </Stack>
 
-            <Fab sx={{ position: "absolute", right: "1em", bottom: "1em" }} href="/settings">
-                <Settings />
-            </Fab>
+            <Link to="/settings">
+                <Fab sx={{ position: "absolute", right: "1em", bottom: "1em" }}>
+                   <Settings />
+                </Fab>
+            </Link>
         </Stack>
     );
 }

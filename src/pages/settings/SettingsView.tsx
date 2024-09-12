@@ -16,6 +16,7 @@ import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import dayjs from "dayjs";
 import i18n from "i18next";
+import {Link} from "react-router-dom";
 
 export default function SettingsView() {
 
@@ -65,7 +66,7 @@ export default function SettingsView() {
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Stack direction="row" spacing={2} margin={"1em 0 "} justifyContent="center">
                 <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
-                <Button variant="contained" href="/">{t("back")}</Button>
+                <Link to="/"><Button variant="contained">{t("back")}</Button></Link>
             </Stack>
 
             <Paper sx={{mb: 3, p: 2}}>
@@ -187,7 +188,7 @@ export default function SettingsView() {
 
             <Stack direction="row" spacing={2} margin={"1em 0 "} justifyContent="center">
                 <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
-                <Button variant="contained" href="/">{t("back")}</Button>
+                <Link to="/"><Button variant="contained">{t("back")}</Button></Link>
             </Stack>
         </Container>
     );
