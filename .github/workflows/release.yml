@@ -51,7 +51,7 @@ jobs:
           name: ${{ env.VERSION }}
           tag_name: ${{ env.VERSION }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          draft: true
+          draft: false
           prerelease: true
           files: |
             dist-zip/*.zip
