@@ -40,11 +40,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm run build
-
-      - name: Set and tag next RC version
-        run: |
-          npm version prerelease --preid rc  
-
+      
       - name: Upload released files
         uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2
         with:
@@ -55,6 +51,10 @@ jobs:
           prerelease: true
           files: |
             dist-zip/*.zip
+
+      - name: Set and tag next RC version
+        run: |
+          npm version prerelease --preid rc              
 
       - name: Push changes
         run: |
