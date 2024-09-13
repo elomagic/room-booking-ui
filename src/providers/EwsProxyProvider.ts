@@ -31,7 +31,7 @@ export class EwsProxyProvider extends AppointmentProvider {
 
         // Send the request and print the response
         return fetch(request)
-            .then(res => res.status >= 200 && res.status < 300);
+            .then((res: Response) => res.status >= 200 && res.status < 300);
     }
 
     extendCurrentAppointment(durationInMinutes: number): Promise<boolean> {
@@ -47,7 +47,7 @@ export class EwsProxyProvider extends AppointmentProvider {
 
         // Send the request and print the response
         return fetch(request)
-            .then(res => res.status >= 200 && res.status < 300);
+            .then((res: Response) => res.status >= 200 && res.status < 300);
     }
 
     getAppointmentsOfToday(): Promise<Appointment[]> {
@@ -58,8 +58,18 @@ export class EwsProxyProvider extends AppointmentProvider {
         })
 
         return fetch(request)
-            // TODO We have to map the date strings into Date objects
-            .then((response: Response) => response.json());
+            .then((response: Response) => response.json())
+            // We have to map the date strings into Date objects
+            .then((apps: any[]) => {
+                return apps.map((app: any) => {
+                    return {
+                        uid: app.uid,
+                        start: new Date(app.start),
+                        end: new Date(app.end),
+                        subject: app.subject
+                    }
+                })
+            });
     }
 
     terminateCurrentAppointment(): Promise<boolean> {
@@ -71,7 +81,7 @@ export class EwsProxyProvider extends AppointmentProvider {
 
         // Send the request and print the response
         return fetch(request)
-            .then(res => res.status >= 200 && res.status < 300);
+            .then((res: Response) => res.status >= 200 && res.status < 300);
     }
 
     getBackendVersion(): Promise<any> {
@@ -86,7 +96,7 @@ export class EwsProxyProvider extends AppointmentProvider {
                 return response;
             })
             // TODO We have to map the date strings into Date objects
-            .then((response) => response.json());
+            .then((response: Response) => response.json());
     }
 
 }
