@@ -7,7 +7,7 @@ import BookingStatus from "./BookingStatus.tsx";
 import Controls from "./Controls.tsx";
 import {useEffect, useState} from "react";
 import {Settings} from "@mui/icons-material";
-import {Fab, Stack} from "@mui/material";
+import {Alert, Fab, Snackbar, Stack} from "@mui/material";
 import {createProvider} from "../../AppointmentManager.ts";
 import {Appointment} from "../../providers/AppointmentProvider.ts";
 import {Link} from "react-router-dom";
@@ -18,6 +18,7 @@ export default function MainView() {
     const [currentAppointment, setCurrentAppointment] = useState<Appointment | null>(null);
     const [nextAppointment, setNextAppointment] = useState<Appointment | null>(null);
     const [showTerminateButton] = useState<boolean>(localStorage.getItem("rb.room.showTerminateButton") === "true");
+    const [snackbarText, setSnackbarText] = useState<string|null>(null);
 
     const refreshUI = () => {
         const provider = createProvider();
@@ -27,8 +28,12 @@ export default function MainView() {
                 setAppointmentsToday(apps)
                 setCurrentAppointment(provider.getCurrentAppointment(apps));
                 setNextAppointment(provider.getNextAppointment(apps));
-            });
+            }, (err) => setSnackbarText(err.message));
     };
+
+    const handleSnackbarClose = () => {
+        setSnackbarText(null);
+    }
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -69,6 +74,16 @@ export default function MainView() {
                    <Settings />
                 </Fab>
             </Link>
+
+            <Snackbar open={snackbarText != null} autoHideDuration={4000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: "top", horizontal: "center" }} >
+                <Alert
+                    onClose={handleSnackbarClose}
+                    severity="error"
+                    variant="filled"
+                    sx={{ width: '100%' }}>
+                    {snackbarText}
+                </Alert>
+            </Snackbar>
         </Stack>
     );
 }
