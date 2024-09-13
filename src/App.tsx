@@ -8,10 +8,9 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='settings' element={<SettingsView/>}/>
-                {/* Default/Fallback routes */}
-                <Route index element={<MainView/>}/>
-                <Route path='*' element={<MainView/>}/>
+                <Route path='/settings' element={<SettingsView/>}/>
+
+                <Route path='/' element={<MainView/>}/>
             </Routes>
         </BrowserRouter>
     )
