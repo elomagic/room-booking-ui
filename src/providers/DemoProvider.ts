@@ -50,4 +50,8 @@ export class DemoProvider extends AppointmentProvider {
         return Promise.resolve(false);
     }
 
+    getBackendVersion(): Promise<any> {
+        return Promise.resolve({ version: "No backend in use" });
+    }
+
 }

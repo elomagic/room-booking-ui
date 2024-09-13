@@ -4,6 +4,7 @@
     "apiKey": "API Key",
     "back": "Zurück",
     "bookable": "Bookable",
+    "backend-version": "Backend Version",
     "cancel": "Cancel",
     "capacity": "Capacity",
     "date-format-weekday": "MM/DD/YYYY, dddd",

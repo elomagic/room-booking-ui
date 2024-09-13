@@ -34,4 +34,6 @@ export abstract class AppointmentProvider {
 
     abstract createAdHocAppointment(durationInMinutes: number): Promise<boolean>;
 
+    abstract getBackendVersion(): Promise<any>
+
 }

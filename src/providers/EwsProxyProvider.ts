@@ -58,7 +58,8 @@ export class EwsProxyProvider extends AppointmentProvider {
         })
 
         return fetch(request)
-            .then((response) => response.json());
+            // TODO We have to map the date strings into Date objects
+            .then((response: Response) => response.json());
     }
 
     terminateCurrentAppointment(): Promise<boolean> {
@@ -71,6 +72,21 @@ export class EwsProxyProvider extends AppointmentProvider {
         // Send the request and print the response
         return fetch(request)
             .then(res => res.status >= 200 && res.status < 300);
+    }
+
+    getBackendVersion(): Promise<any> {
+        return fetch(this.baseUrl + '/api/version', {
+            method: 'GET',
+            headers: this.createHeaders()
+        })
+            .then((response: Response) => {
+                if (response.status >= 300) {
+                    throw new Error("Error: " + response.status);
+                }
+                return response;
+            })
+            // TODO We have to map the date strings into Date objects
+            .then((response) => response.json());
     }
 
 }

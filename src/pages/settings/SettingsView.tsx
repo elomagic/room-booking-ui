@@ -12,16 +12,19 @@ import {
     Stack,
     TextField
 } from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import dayjs from "dayjs";
 import i18n from "i18next";
 import {Link} from "react-router-dom";
+import {createProvider} from "../../AppointmentManager.ts";
 
 export default function SettingsView() {
 
     const { t } = useTranslation();
     const passwordPlaceholder = "do_ya_think_i_am_a_stupid_dev???";
+
+    const [backendVersion, setBackendVersion] = useState<string>("?");
 
     const [language, setLanguage] = useState<string>(localStorage.getItem("rb.language") ?? "en");
     const [name, setName] = useState<string>(localStorage.getItem("rb.room.name") ?? "");
@@ -43,6 +46,15 @@ export default function SettingsView() {
         i18n.changeLanguage(l)
             .then(() => dayjs.locale(l));
     };
+
+    useEffect(() => {
+        const provider = createProvider();
+
+        provider.getBackendVersion()
+            .then((dto) => {
+                setBackendVersion(dto.version);
+            });// TODO , (err) => setSnackbarText(err.message));
+    }, []);
 
     const handleSaveClick = () => {
         localStorage.setItem("rb.room.name", name);
@@ -184,6 +196,10 @@ export default function SettingsView() {
                         }} />} label= {t("webCamera-support")}
                     />
                 </Stack>
+            </Paper>
+
+            <Paper sx={{mb: 3, p: 2}}>
+                {t("backend-version")}: {backendVersion}
             </Paper>
 
             <Stack direction="row" spacing={2} margin={"1em 0 "} justifyContent="center">
