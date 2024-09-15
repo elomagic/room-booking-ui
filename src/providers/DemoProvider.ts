@@ -54,4 +54,8 @@ export class DemoProvider extends AppointmentProvider {
         return Promise.resolve({ version: "No backend in use" });
     }
 
+    validatePin(pin: string): Promise<boolean> {
+        return Promise.resolve(pin === "123456");
+    }
+
 }
