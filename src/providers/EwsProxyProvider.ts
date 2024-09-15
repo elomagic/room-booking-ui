@@ -89,14 +89,19 @@ export class EwsProxyProvider extends AppointmentProvider {
             method: 'GET',
             headers: this.createHeaders()
         })
-            .then((response: Response) => {
-                if (response.status >= 300) {
-                    throw new Error("Error: " + response.status);
-                }
-                return response;
-            })
             // TODO We have to map the date strings into Date objects
             .then((response: Response) => response.json());
+    }
+
+    validatePin(pin: string): Promise<boolean> {
+        return fetch(this.baseUrl + '/api/validate', {
+            method: 'GET',
+            headers: this.createHeaders(),
+            // Convert the user object to JSON and pass it as the body
+            body: JSON.stringify({
+                pin: pin
+            })
+        }).then((res: Response) => res.status == 200);
     }
 
 }

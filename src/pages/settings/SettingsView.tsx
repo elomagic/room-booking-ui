@@ -12,19 +12,24 @@ import {
     Stack,
     TextField
 } from "@mui/material";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import dayjs from "dayjs";
 import i18n from "i18next";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {createProvider} from "../../AppointmentManager.ts";
+import PinDialog from "./PinDialog.tsx";
 
 export default function SettingsView() {
 
     const { t } = useTranslation();
     const passwordPlaceholder = "do_ya_think_i_am_a_stupid_dev???";
 
+    const navigate = useNavigate();
+
     const [backendVersion, setBackendVersion] = useState<string>("?");
+    const [authorized, setAuthorized] = useState<boolean>(false);
+    const [pinError, setPinError] = useState<boolean>(false);
 
     const [language, setLanguage] = useState<string>(localStorage.getItem("rb.language") ?? "en");
     const [name, setName] = useState<string>(localStorage.getItem("rb.room.name") ?? "");
@@ -47,6 +52,22 @@ export default function SettingsView() {
             .then(() => dayjs.locale(l));
     };
 
+    const handlePinClick = (okClick: boolean, pin: string | null) => {
+        if (okClick && pin !== null) {
+            const provider = createProvider();
+
+            provider.validatePin(pin)
+                .then(auth => {
+                    setAuthorized(auth);
+                    setPinError(!auth);
+                }, () => {
+                    setAuthorized(false)
+                    setPinError(true);
+                });// TODO , (err) => setSnackbarText(err.message));
+        } else {
+            navigate("/");
+        }
+    }
     useEffect(() => {
         const provider = createProvider();
 
@@ -76,7 +97,7 @@ export default function SettingsView() {
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Stack direction="row" spacing={2} margin={"1em 0 "} justifyContent="center">
+            {authorized && (<React.Fragment><Stack direction="row" spacing={2} margin={"1em 0 "} justifyContent="center">
                 <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
                 <Link to="/"><Button variant="contained">{t("back")}</Button></Link>
             </Stack>
@@ -206,6 +227,9 @@ export default function SettingsView() {
                 <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
                 <Link to="/"><Button variant="contained">{t("back")}</Button></Link>
             </Stack>
+            </React.Fragment>)}
+            
+            <PinDialog open={!authorized} error={pinError} onClick={handlePinClick}/>
         </Container>
     );
 }
