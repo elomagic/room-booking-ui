@@ -19,6 +19,7 @@ import i18n from "i18next";
 import {Link, useNavigate} from "react-router-dom";
 import {createProvider} from "../../AppointmentManager.ts";
 import PinDialog from "./PinDialog.tsx";
+import {GitHub} from "@mui/icons-material";
 
 export default function SettingsView() {
 
@@ -221,9 +222,14 @@ export default function SettingsView() {
 
             <Paper sx={{mb: 3, p: 2}}>
                 {t("backend-version")}: {backendVersion}
+                &nbsp;&bull;&nbsp;
+                <a href='https://github.com/elomagic/room-booking-backend'>
+                    <GitHub sx={{fontSize: 'unset', verticalAlign: 'text-top'}} />
+                    <span style={{marginLeft: '2px'}}>GitHub</span>
+                </a>
             </Paper>
 
-            <Stack direction="row" spacing={2} margin={"1em 0 "} justifyContent="center">
+            <Stack direction="row" spacing={2} margin={"1em 0"} justifyContent="center">
                 <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
                 <Link to="/"><Button variant="contained">{t("back")}</Button></Link>
             </Stack>
