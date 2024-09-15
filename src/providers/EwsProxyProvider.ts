@@ -27,7 +27,7 @@ export class EwsProxyProvider extends AppointmentProvider {
             body: JSON.stringify({
                 duration: durationInMinutes
             })
-        })
+        });
 
         // Send the request and print the response
         return fetch(request)
@@ -43,7 +43,7 @@ export class EwsProxyProvider extends AppointmentProvider {
             body: JSON.stringify({
                 duration: durationInMinutes
             })
-        })
+        });
 
         // Send the request and print the response
         return fetch(request)
@@ -55,7 +55,7 @@ export class EwsProxyProvider extends AppointmentProvider {
             // We need to set the `method` to `POST` and assign the headers
             method: 'GET',
             headers: this.createHeaders()
-        })
+        });
 
         return fetch(request)
             .then((response: Response) => response.json())
@@ -77,7 +77,7 @@ export class EwsProxyProvider extends AppointmentProvider {
             // We need to set the `method` to `POST` and assign the headers
             method: 'PUT',
             headers: this.createHeaders()
-        })
+        });
 
         // Send the request and print the response
         return fetch(request)
@@ -94,14 +94,17 @@ export class EwsProxyProvider extends AppointmentProvider {
     }
 
     validatePin(pin: string): Promise<boolean> {
-        return fetch(this.baseUrl + '/api/validate', {
-            method: 'GET',
+        const request: RequestInfo = new Request(this.baseUrl +  '/api/validate', {
+            method: 'POST',
             headers: this.createHeaders(),
             // Convert the user object to JSON and pass it as the body
             body: JSON.stringify({
                 pin: pin
             })
-        }).then((res: Response) => res.status == 200);
+        });
+
+        return fetch(request)
+            .then((res: Response) => res.status == 200);
     }
 
 }
