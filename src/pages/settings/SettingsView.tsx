@@ -1,4 +1,5 @@
 import {
+    Alert, AlertColor,
     Button,
     Checkbox,
     Container,
@@ -9,6 +10,7 @@ import {
     Paper,
     Select,
     SelectChangeEvent,
+    Snackbar,
     Stack,
     TextField
 } from "@mui/material";
@@ -17,7 +19,7 @@ import {useTranslation} from "react-i18next";
 import dayjs from "dayjs";
 import i18n from "i18next";
 import {Link, useNavigate} from "react-router-dom";
-import {createProvider} from "../../AppointmentManager.ts";
+import {createProvider, createProviderApi} from "../../AppointmentManager.ts";
 import PinDialog from "./PinDialog.tsx";
 import {GitHub} from "@mui/icons-material";
 
@@ -45,6 +47,9 @@ export default function SettingsView() {
     const [apiKey, setApiKey] = useState<string>(passwordPlaceholder);
     const [resourceId, setResourceId] = useState<string>(localStorage.getItem("rb.ext.resourceId") ?? "");
 
+    const [snackbarText, setSnackbarText] = useState<string|null>(null);
+    const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>("error");
+
     const handleChange = (event: SelectChangeEvent) => {
         const l = event.target.value
         setLanguage(l);
@@ -55,27 +60,47 @@ export default function SettingsView() {
 
     const handlePinClick = (okClick: boolean, pin: string | null) => {
         if (okClick && pin !== null) {
-            const provider = createProvider();
-
-            provider.validatePin(pin)
+            createProvider()
+                .validatePin(pin)
                 .then(auth => {
                     setAuthorized(auth);
                     setPinError(!auth);
                 }, () => {
                     setAuthorized(false)
                     setPinError(true);
-                });// TODO , (err) => setSnackbarText(err.message));
+                });
         } else {
             navigate("/");
         }
     }
-    useEffect(() => {
-        const provider = createProvider();
 
-        provider.getBackendVersion()
+    const handleTestClick = () => {
+        setSnackbarText(null);
+        createProviderApi(api)
+            .testConfiguration(url, apiKey, resourceId)
+            .then(() => {
+                setSnackbarSeverity("success")
+                setSnackbarText(t("successful"));
+            }, (err) => {
+                setSnackbarSeverity("error")
+                setSnackbarText(err.message);
+            })
+    }
+
+    const handleSnackbarClose = () => {
+        setSnackbarText(null);
+    }
+
+    useEffect(() => {
+        setSnackbarText(null);
+        createProvider()
+            .getBackendVersion()
             .then((dto) => {
                 setBackendVersion(dto.version);
-            });// TODO , (err) => setSnackbarText(err.message));
+            }, (err) => {
+                setSnackbarSeverity("error")
+                setSnackbarText(err.message);
+            });
     }, []);
 
     const handleSaveClick = () => {
@@ -148,6 +173,10 @@ export default function SettingsView() {
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => setApiKey(event.target.value)}
                         />
                     </FormControl>
+
+                    <Stack direction="row" spacing={2}>
+                        <Button variant="contained" onClick={handleTestClick}>{t("test")}</Button>
+                    </Stack>
                 </Stack>
             </Paper>
 
@@ -236,6 +265,15 @@ export default function SettingsView() {
             </React.Fragment>)}
             
             <PinDialog open={!authorized} error={pinError} onClick={handlePinClick}/>
+
+            <Snackbar open={snackbarText != null} autoHideDuration={2000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }} >
+                <Alert
+                    severity={snackbarSeverity}
+                    variant="filled"
+                    sx={{ width: '100%' }}>
+                    {snackbarText}
+                </Alert>
+            </Snackbar>
         </Container>
     );
 }

@@ -3,17 +3,19 @@ import {Appointment, AppointmentProvider} from "./AppointmentProvider.ts";
 export class EwsProxyProvider extends AppointmentProvider {
 
     baseUrl = localStorage.getItem("rb.ext.url") ?? "https://localhost";
+    apiKey = localStorage.getItem("rb.ext.apiKey") ?? "demo";
+    resourceId = localStorage.getItem("rb.ext.resourceId") ?? "0";
 
     createHeaders(): Headers {
         // Since this request will send JSON data in the body,
         // we need to set the `Content-Type` header to `application/json`
-        const headers: Headers = new Headers()
-        headers.set('Content-Type', 'application/json')
+        const headers: Headers = new Headers();
+        headers.set('Content-Type', 'application/json');
         // We also need to set the `Accept` header to `application/json`
         // to tell the server that we expect JSON in response
-        headers.set('Accept', 'application/json')
-        headers.set('RB-ApiKey', localStorage.getItem("rb.ext.apiKey") ?? "demo")
-        headers.set('RB-Resource-ID', localStorage.getItem("rb.ext.resourceId") ?? "0")
+        headers.set('Accept', 'application/json');
+        headers.set('RB-ApiKey', this.apiKey);
+        headers.set('RB-Resource-ID', this.resourceId);
 
         return headers;
     }
@@ -105,6 +107,14 @@ export class EwsProxyProvider extends AppointmentProvider {
 
         return fetch(request)
             .then((res: Response) => res.status == 200);
+    }
+
+    testConfiguration(baseUrl: string, apiKey: string, resourceId: string): Promise<boolean> {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+        this.resourceId = resourceId;
+
+        return this.getAppointmentsOfToday().then(() => true);
     }
 
 }
