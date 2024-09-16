@@ -1,4 +1,5 @@
 import {Appointment, AppointmentProvider} from "./AppointmentProvider.ts";
+import {getReasonPhrase} from "http-status-codes";
 
 export class EwsProxyProvider extends AppointmentProvider {
 
@@ -60,7 +61,13 @@ export class EwsProxyProvider extends AppointmentProvider {
         });
 
         return fetch(request)
-            .then((response: Response) => response.json())
+            .then((response: Response) => {
+                if (response.status >= 400 && response.status < 500) {
+                    const text = response.statusText === null || response.statusText === "" ? getReasonPhrase(response.status) : response.statusText;
+                    throw new Error("Response HTTP status: " + response.status + " " + text);
+                }
+                return response.json();
+            })
             // We have to map the date strings into Date objects
             .then((apps: any[]) => {
                 return apps.map((app: any) => {
