@@ -50,6 +50,7 @@ export default function PinDialog(props: Readonly<PinDialogProps>) {
                             error={error}
                             value={pin}
                             type="password"
+                            autoFocus={true}
                             helperText={error && t("incorrect_pin")}
                             onChange={handlePinChangeClick}
                         />
