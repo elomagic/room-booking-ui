@@ -77,7 +77,7 @@ export default function SettingsView() {
     const handleTestClick = () => {
         setSnackbarText(null);
         createProviderApi(api)
-            .testConfiguration(url, apiKey, resourceId)
+            .testConfiguration(url, passwordPlaceholder == apiKey ? localStorage.getItem("rb.ext.apiKey") ?? "demo" : passwordPlaceholder, resourceId)
             .then(() => {
                 setSnackbarSeverity("success")
                 setSnackbarText(t("successful"));
