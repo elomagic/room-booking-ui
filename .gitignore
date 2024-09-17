@@ -25,3 +25,4 @@ dist-ssr
 
 # elo
 *.tsbuildinfo
+/src/assets/license-report.json

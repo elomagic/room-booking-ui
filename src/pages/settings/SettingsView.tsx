@@ -1,8 +1,9 @@
 import {
-    Alert, AlertColor,
+    Alert, AlertColor, Box,
     Button,
     Checkbox,
     Container,
+    Divider,
     FormControl,
     FormControlLabel,
     InputLabel,
@@ -21,8 +22,8 @@ import i18n from "i18next";
 import {Link, useNavigate} from "react-router-dom";
 import {createProvider, createProviderApi} from "../../AppointmentManager.ts";
 import PinDialog from "./PinDialog.tsx";
-import {GitHub} from "@mui/icons-material";
 import p from "../../../package.json"
+import LicenseList from "./LicenseList.tsx";
 
 export default function SettingsView() {
 
@@ -124,152 +125,174 @@ export default function SettingsView() {
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            {authorized && (<React.Fragment><Stack direction="row" spacing={2} margin={"1em 0 "} justifyContent="center">
-                <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
-                <Link to="/"><Button variant="contained">{t("back")}</Button></Link>
-            </Stack>
+            {authorized && (<React.Fragment>
+                <Stack direction="row" spacing={2} margin={"1em 0 "} justifyContent="center">
+                    <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
+                    <Link to="/"><Button variant="contained">{t("back")}</Button></Link>
+                </Stack>
 
-            <Paper sx={{mb: 3, p: 2}}>
-                <h2>{t("integration")}</h2>
+                <Paper sx={{mb: 3, p: 2}}>
+                    <h2>{t("integration")}</h2>
 
-                <Stack direction="column" spacing={2}>
-                    <FormControl fullWidth>
-                        <InputLabel id="language-label-id">{t("api")}</InputLabel>
-                        <Select
-                            labelId="anguage-label-id"
-                            label={t("api")}
-                            color="primary"
-                            value={api}
-                            onChange={(event: SelectChangeEvent) => setApi(event.target.value)}
-                            variant="outlined">
-                            <MenuItem value="demo">{t("demo-mode")}</MenuItem>
-                            <MenuItem value="ews-proxy">Microsoft EWS</MenuItem>
-                        </Select>
-                    </FormControl>
+                    <Stack direction="column" spacing={2}>
+                        <FormControl fullWidth>
+                            <InputLabel id="language-label-id">{t("api")}</InputLabel>
+                            <Select
+                                labelId="anguage-label-id"
+                                label={t("api")}
+                                color="primary"
+                                value={api}
+                                onChange={(event: SelectChangeEvent) => setApi(event.target.value)}
+                                variant="outlined">
+                                <MenuItem value="demo">{t("demo-mode")}</MenuItem>
+                                <MenuItem value="ews-proxy">Microsoft EWS</MenuItem>
+                            </Select>
+                        </FormControl>
 
-                    <FormControl fullWidth>
-                        <TextField
-                            label={t("url")}
-                            value={url}
-                            type="url"
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                setUrl(event.target.value);
-                            }}
-                        />
-                    </FormControl>
+                        <FormControl fullWidth>
+                            <TextField
+                                label={t("url")}
+                                value={url}
+                                type="url"
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    setUrl(event.target.value);
+                                }}
+                            />
+                        </FormControl>
 
-                    <FormControl fullWidth>
-                        <TextField
-                            label={t("resource-id")}
-                            value={resourceId}
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setResourceId(event.target.value)}
-                        />
-                    </FormControl>
+                        <FormControl fullWidth>
+                            <TextField
+                                label={t("resource-id")}
+                                value={resourceId}
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setResourceId(event.target.value)}
+                            />
+                        </FormControl>
 
-                    <FormControl fullWidth>
-                        <TextField
-                            label={t("apiKey")}
-                            value={apiKey}
-                            type="password"
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setApiKey(event.target.value)}
-                        />
-                    </FormControl>
+                        <FormControl fullWidth>
+                            <TextField
+                                label={t("apiKey")}
+                                value={apiKey}
+                                type="password"
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setApiKey(event.target.value)}
+                            />
+                        </FormControl>
 
-                    <Stack direction="row" spacing={2}>
-                        <Button variant="contained" onClick={handleTestClick}>{t("test")}</Button>
+                        <Stack direction="row" spacing={2}>
+                            <Button variant="contained" onClick={handleTestClick}>{t("test")}</Button>
+                        </Stack>
                     </Stack>
-                </Stack>
-            </Paper>
+                </Paper>
 
-            <Paper sx={{ mb: 3, p: 2 }}>
-                <h2>{t("display")}</h2>
+                <Paper sx={{ mb: 3, p: 2 }}>
+                    <h2>{t("display")}</h2>
 
-                <Stack direction="column" spacing={2}>
-                    <FormControl fullWidth>
-                        <InputLabel id="language-label-id">{t("language")}</InputLabel>
-                        <Select
-                            labelId="anguage-label-id"
-                            label={t("language")}
-                            color="primary"
-                            value={language}
-                            onChange={handleChange}
-                            variant="outlined">
-                            <MenuItem value="en">English (American)</MenuItem>
-                            <MenuItem value="de">German</MenuItem>
-                        </Select>
-                    </FormControl>
+                    <Stack direction="column" spacing={2}>
+                        <FormControl fullWidth>
+                            <InputLabel id="language-label-id">{t("language")}</InputLabel>
+                            <Select
+                                labelId="anguage-label-id"
+                                label={t("language")}
+                                color="primary"
+                                value={language}
+                                onChange={handleChange}
+                                variant="outlined">
+                                <MenuItem value="en">English (American)</MenuItem>
+                                <MenuItem value="de">German</MenuItem>
+                            </Select>
+                        </FormControl>
 
-                    <FormControl fullWidth>
-                        <TextField
-                            label={t("name")}
-                            value={name}
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
+                        <FormControl fullWidth>
+                            <TextField
+                                label={t("name")}
+                                value={name}
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
+                            />
+                        </FormControl>
+
+                        <FormControl fullWidth>
+                            <TextField
+                                label={t("capacity")}
+                                value={capacity}
+                                type="number"
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCapacity(event.target.value)}
+                                slotProps={{
+                                    htmlInput: {
+                                        min: 0,
+                                    },
+                                    inputLabel: {
+                                        shrink: true,
+                                    },
+                                }}
+                            />
+                        </FormControl>
+
+                        <FormControlLabel control={
+                            <Checkbox checked={showTerminateButton} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setShowTerminateButton(event.target.checked);
+                            }} />} label={t("show-terminate-button")}
                         />
-                    </FormControl>
 
-                    <FormControl fullWidth>
-                        <TextField
-                            label={t("capacity")}
-                            value={capacity}
-                            type="number"
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCapacity(event.target.value)}
-                            slotProps={{
-                                htmlInput: {
-                                    min: 0,
-                                },
-                                inputLabel: {
-                                    shrink: true,
-                                },
-                            }}
+                        <FormControlLabel control={
+                            <Checkbox checked={microphoneSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setMicrophoneSupport(event.target.checked);
+                            }} />} label={t("microphone-support")}
                         />
-                    </FormControl>
 
-                    <FormControlLabel control={
-                        <Checkbox checked={showTerminateButton} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            setShowTerminateButton(event.target.checked);
-                        }} />} label={t("show-terminate-button")}
-                    />
+                        <FormControlLabel control={
+                            <Checkbox checked={screenCastSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setScreenCastSupport(event.target.checked);
+                            }} />} label={t("screencast-support")}
+                        />
 
-                    <FormControlLabel control={
-                        <Checkbox checked={microphoneSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            setMicrophoneSupport(event.target.checked);
-                        }} />} label={t("microphone-support")}
-                    />
+                        <FormControlLabel control={
+                            <Checkbox checked={webCameraSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setWebCameraSupport(event.target.checked);
+                            }} />} label= {t("webCamera-support")}
+                        />
+                    </Stack>
+                </Paper>
 
-                    <FormControlLabel control={
-                        <Checkbox checked={screenCastSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            setScreenCastSupport(event.target.checked);
-                        }} />} label={t("screencast-support")}
-                    />
-
-                    <FormControlLabel control={
-                        <Checkbox checked={webCameraSupport} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            setWebCameraSupport(event.target.checked);
-                        }} />} label= {t("webCamera-support")}
-                    />
+                <Stack direction="row" spacing={2} margin={"1em 0"} justifyContent="center">
+                    <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
+                    <Link to="/"><Button variant="contained">{t("back")}</Button></Link>
                 </Stack>
-            </Paper>
 
-            <Paper sx={{mb: 3, p: 2}}>
-                {t("frontend-version")}: {p.version}
-                &nbsp;&bull;&nbsp;
-                {t("backend-version")}: {backendVersion}
-                &nbsp;&bull;&nbsp;
-                <a href='https://github.com/elomagic/room-booking-backend'>
-                    <GitHub sx={{fontSize: 'unset', verticalAlign: 'text-top'}} />
-                    <span style={{marginLeft: '2px'}}>GitHub</span>
-                </a>
-            </Paper>
+                <Paper sx={{mb: 3, p: 2}}>
+                    <Stack
+                        direction="column"
+                        spacing={2}
+                        sx={{flexGrow: 1}}
+                        alignItems="center"
+                    >
+                        <Stack direction="row" spacing={2}>
+                            {t("frontend-version")}: {p.version}
+                            &nbsp;&bull;&nbsp;
+                            {t("backend-version")}: {backendVersion}
+                        </Stack>
 
-            <Stack direction="row" spacing={2} margin={"1em 0"} justifyContent="center">
-                <Button variant="contained" onClick={handleSaveClick}>{t("save")}</Button>
-                <Link to="/"><Button variant="contained">{t("back")}</Button></Link>
-            </Stack>
+                        <Divider sx={{width: "100%"}}/>
+
+                        <Stack direction="row" spacing={2}>
+                            {t('developed_by')}
+                            &nbsp;&bull;&nbsp;
+                            <a href='https://github.com/elomagic/room-booking-backend' target="_blank">GitHub</a>
+                        </Stack>
+
+                        <Divider sx={{width: "100%"}}/>
+
+                        <Box textAlign="center">
+                            {t('powered_by_oss')}
+
+                            <LicenseList/>
+                        </Box>
+                    </Stack>
+                </Paper>
             </React.Fragment>)}
-            
+
             <PinDialog open={!authorized} error={pinError} onClick={handlePinClick}/>
 
-            <Snackbar open={snackbarText != null} autoHideDuration={2000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }} >
+            <Snackbar open={snackbarText != null} autoHideDuration={2000} onClose={handleSnackbarClose}
+                      anchorOrigin={{vertical: "bottom", horizontal: "center" }} >
                 <Alert
                     severity={snackbarSeverity}
                     variant="filled"
