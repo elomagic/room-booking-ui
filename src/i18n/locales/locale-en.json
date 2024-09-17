@@ -39,7 +39,7 @@
     "terminate-booking": "Terminate Booking",
     "terminate-booking-text": "Do ya really want to terminate the current booking?",
     "test": "Test",
-    "time-format-short": "H:mm a",
+    "time-format-short": "h:mm a",
     "time-hour-short": "h a",
     "uid": "UID",
     "url": "URL",
