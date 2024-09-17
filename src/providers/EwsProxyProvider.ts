@@ -3,7 +3,7 @@ import {getReasonPhrase} from "http-status-codes";
 
 export class EwsProxyProvider extends AppointmentProvider {
 
-    baseUrl = localStorage.getItem("rb.ext.url") ?? "https://localhost";
+    baseUrl = localStorage.getItem("rb.ext.url") ?? "";
     apiKey = localStorage.getItem("rb.ext.apiKey") ?? "demo";
     resourceId = localStorage.getItem("rb.ext.resourceId") ?? "0";
 
@@ -116,8 +116,7 @@ export class EwsProxyProvider extends AppointmentProvider {
             .then((res: Response) => res.status == 200);
     }
 
-    testConfiguration(baseUrl: string, apiKey: string, resourceId: string): Promise<boolean> {
-        this.baseUrl = baseUrl;
+    testConfiguration(apiKey: string, resourceId: string): Promise<boolean> {
         this.apiKey = apiKey;
         this.resourceId = resourceId;
 

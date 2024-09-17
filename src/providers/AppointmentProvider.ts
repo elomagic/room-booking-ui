@@ -38,6 +38,6 @@ export abstract class AppointmentProvider {
 
     abstract validatePin(pin: string): Promise<boolean>;
 
-    abstract testConfiguration(url: string, apiKey: string, resourceId: string): Promise<boolean>;
+    abstract testConfiguration(apiKey: string, resourceId: string): Promise<boolean>;
 
 }

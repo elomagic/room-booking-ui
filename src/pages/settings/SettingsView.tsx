@@ -45,7 +45,6 @@ export default function SettingsView() {
     const [webCameraSupport, setWebCameraSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.webCameraSupport") ?? "false"));
 
     const [api, setApi] = useState<string>(localStorage.getItem("rb.ext.api") ?? "demo");
-    const [url, setUrl] = useState<string>(localStorage.getItem("rb.ext.url") ?? "");
     const [apiKey, setApiKey] = useState<string>(passwordPlaceholder);
     const [resourceId, setResourceId] = useState<string>(localStorage.getItem("rb.ext.resourceId") ?? "");
 
@@ -79,7 +78,7 @@ export default function SettingsView() {
     const handleTestClick = () => {
         setSnackbarText(null);
         createProviderApi(api)
-            .testConfiguration(url, passwordPlaceholder == apiKey ? localStorage.getItem("rb.ext.apiKey") ?? "demo" : passwordPlaceholder, resourceId)
+            .testConfiguration(passwordPlaceholder == apiKey ? localStorage.getItem("rb.ext.apiKey") ?? "demo" : apiKey, resourceId)
             .then(() => {
                 setSnackbarSeverity("success")
                 setSnackbarText(t("successful"));
@@ -115,7 +114,6 @@ export default function SettingsView() {
         localStorage.setItem("rb.language", language);
 
         localStorage.setItem("rb.ext.api", api);
-        localStorage.setItem("rb.ext.url", url);
         if (passwordPlaceholder !== apiKey) {
             localStorage.setItem("rb.ext.apiKey", apiKey);
             setApiKey(passwordPlaceholder);
@@ -149,37 +147,30 @@ export default function SettingsView() {
                             </Select>
                         </FormControl>
 
-                        <FormControl fullWidth>
-                            <TextField
-                                label={t("url")}
-                                value={url}
-                                type="url"
-                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                    setUrl(event.target.value);
-                                }}
-                            />
-                        </FormControl>
+                        {api == "ews-proxy" && (
+                            <React.Fragment>
+                                <FormControl fullWidth>
+                                    <TextField
+                                        label={t("resource-id")}
+                                        value={resourceId}
+                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setResourceId(event.target.value)}
+                                    />
+                                </FormControl>
 
-                        <FormControl fullWidth>
-                            <TextField
-                                label={t("resource-id")}
-                                value={resourceId}
-                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setResourceId(event.target.value)}
-                            />
-                        </FormControl>
+                                <FormControl fullWidth>
+                                    <TextField
+                                        label={t("apiKey")}
+                                        value={apiKey}
+                                        type="password"
+                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setApiKey(event.target.value)}
+                                    />
+                                </FormControl>
 
-                        <FormControl fullWidth>
-                            <TextField
-                                label={t("apiKey")}
-                                value={apiKey}
-                                type="password"
-                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setApiKey(event.target.value)}
-                            />
-                        </FormControl>
-
-                        <Stack direction="row" spacing={2}>
-                            <Button variant="contained" onClick={handleTestClick}>{t("test")}</Button>
-                        </Stack>
+                                <Stack direction="row" spacing={2}>
+                                    <Button variant="contained" onClick={handleTestClick}>{t("test")}</Button>
+                                </Stack>
+                           </React.Fragment>
+                        )}
                     </Stack>
                 </Paper>
 
