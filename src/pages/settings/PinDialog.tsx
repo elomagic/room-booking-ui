@@ -53,6 +53,7 @@ export default function PinDialog(props: Readonly<PinDialogProps>) {
                             autoFocus={true}
                             helperText={error && t("incorrect_pin")}
                             onChange={handlePinChangeClick}
+                            onKeyUp={(event) => event.key === "Enter" && handleOkClick()}
                         />
                     </Stack>
                 </DialogContentText>
