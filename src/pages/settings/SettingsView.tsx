@@ -22,6 +22,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {createProvider, createProviderApi} from "../../AppointmentManager.ts";
 import PinDialog from "./PinDialog.tsx";
 import {GitHub} from "@mui/icons-material";
+import p from "../../../package.json"
 
 export default function SettingsView() {
 
@@ -250,6 +251,8 @@ export default function SettingsView() {
             </Paper>
 
             <Paper sx={{mb: 3, p: 2}}>
+                {t("frontend-version")}: {p.version}
+                &nbsp;&bull;&nbsp;
                 {t("backend-version")}: {backendVersion}
                 &nbsp;&bull;&nbsp;
                 <a href='https://github.com/elomagic/room-booking-backend'>
