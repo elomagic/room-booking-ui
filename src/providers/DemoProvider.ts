@@ -58,7 +58,7 @@ export class DemoProvider extends AppointmentProvider {
         return Promise.resolve(pin === "123456");
     }
 
-    testConfiguration(_url: string, _apiKey: string, _resourceId: string): Promise<boolean> {
+    testConfiguration(_apiKey: string, _resourceId: string): Promise<boolean> {
         return Promise.resolve(true);
     }
 
