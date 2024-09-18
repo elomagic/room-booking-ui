@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import germanBaseTrans from './locales/locale-de.json';
 import englishBaseTrans from './locales/locale-en.json';
+import frenchBaseTrans from './locales/locale-fr.json';
 import { initReactI18next } from 'react-i18next';
 import dayjs from "dayjs";
 import 'dayjs/locale/de';
@@ -27,6 +28,9 @@ i18n.use(initReactI18next).init({
         },
         en: {
             translations: englishTrans
+        },
+        fr: {
+            translations: frenchBaseTrans
         }
     }
 }).then(() => dayjs.locale(language));

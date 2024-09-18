@@ -19,7 +19,7 @@ import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import dayjs from "dayjs";
 import i18n from "i18next";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {createProvider, createProviderApi} from "../../AppointmentManager.ts";
 import PinDialog from "./PinDialog.tsx";
 import p from "../../../package.json"
@@ -31,6 +31,7 @@ export default function SettingsView() {
     const passwordPlaceholder = "do_ya_think_i_am_a_stupid_dev???";
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [backendVersion, setBackendVersion] = useState<string>("?");
     const [authorized, setAuthorized] = useState<boolean>(false);
@@ -93,15 +94,20 @@ export default function SettingsView() {
     }
 
     useEffect(() => {
-        setSnackbarText(null);
-        createProvider()
-            .getBackendVersion()
-            .then((dto) => {
-                setBackendVersion(dto.version);
-            }, (err) => {
-                setSnackbarSeverity("error")
-                setSnackbarText(err.message);
-            });
+
+        if (location.hash != null) {
+            handlePinClick(true, location.hash.substring(1));
+        } else {
+            setSnackbarText(null);
+            createProvider()
+                .getBackendVersion()
+                .then((dto) => {
+                    setBackendVersion(dto.version);
+                }, (err) => {
+                    setSnackbarSeverity("error")
+                    setSnackbarText(err.message);
+                });
+        }
     }, []);
 
     const handleSaveClick = () => {
@@ -189,6 +195,7 @@ export default function SettingsView() {
                                 variant="outlined">
                                 <MenuItem value="en">English (American)</MenuItem>
                                 <MenuItem value="de">German</MenuItem>
+                                {/*<MenuItem value="fr">French</MenuItem>*/}
                             </Select>
                         </FormControl>
 
