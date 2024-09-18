@@ -10,15 +10,22 @@ import {Settings} from "@mui/icons-material";
 import {Alert, Fab, Snackbar, Stack} from "@mui/material";
 import {createProvider} from "../../AppointmentManager.ts";
 import {Appointment} from "../../providers/AppointmentProvider.ts";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import ConfirmationDialog from "./ConfirmationDialog.tsx";
+import {useTranslation} from "react-i18next";
 
 export default function MainView() {
+
+    const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const [appointmentsToday, setAppointmentsToday] = useState<Appointment[]>([]);
     const [currentAppointment, setCurrentAppointment] = useState<Appointment | null>(null);
     const [nextAppointment, setNextAppointment] = useState<Appointment | null>(null);
     const [showTerminateButton] = useState<boolean>(localStorage.getItem("rb.room.showTerminateButton") === "true");
     const [snackbarText, setSnackbarText] = useState<string|null>(null);
+
+    const [openSettingsDialog, setOpenSettingsDialog] = useState(false);
 
     const refreshUI = () => {
         const provider = createProvider();
@@ -35,7 +42,19 @@ export default function MainView() {
         setSnackbarText(null);
     }
 
+    const handleOpenSettingsClick = (okClick: boolean) => {
+        if (okClick) {
+            navigate("/settings#123456");
+        }
+
+        setOpenSettingsDialog(false);
+    }
+
     useEffect(() => {
+        if (localStorage.getItem("rb.ext.api") == null) {
+            setOpenSettingsDialog(true);
+        }
+
         const interval = setInterval(() => {
             refreshUI();
         }, 5000);
@@ -47,7 +66,7 @@ export default function MainView() {
 
     return (
         <Stack direction="row" sx={{ height: "calc(100vh - 2em)", width: "calc(100% - 2em)"}} spacing={2} className={"Border " + (currentAppointment ? "Booked" : "Bookable")}>
-            <Stack direction="column" width="66%" paddingRight="0.9em" sx={{ backgroundColor: "#171717", "borderRadius": "2em 0 0 2em" }}>
+            <Stack direction="column" width="75%" paddingRight="0.9em" sx={{ backgroundColor: "#171717", "borderRadius": "2em 0 0 2em" }}>
                 <DigitalClock />
                 <RoomProperties />
                 <BookingStatus
@@ -84,6 +103,14 @@ export default function MainView() {
                     {snackbarText}
                 </Alert>
             </Snackbar>
+
+            <ConfirmationDialog
+                open={openSettingsDialog}
+                text={t('first-open-settings')}
+                okText={t('setup')}
+                cancelText={t('no')}
+                onClick={handleOpenSettingsClick}
+            />
         </Stack>
     );
 }

@@ -51,13 +51,13 @@ export default function ConfirmationDialog(props: Readonly<ConfirmationDialogPro
                 </div>
             </DialogContent>
             <DialogActions>
-                <Button color='error' onClick={handleYesClick}>
-                    {props.okText && <div>{props.okText}</div>}
-                    {!props.okText && t('ok')}
-                </Button>
                 <Button variant='contained' onClick={handleNoClick}>
                     {props.cancelText && <div>{props.cancelText}</div>}
                     {!props.cancelText && t('cancel')}
+                </Button>
+                <Button variant='contained' onClick={handleYesClick}>
+                    {props.okText && <div>{props.okText}</div>}
+                    {!props.okText && t('ok')}
                 </Button>
             </DialogActions>
         </Dialog>
