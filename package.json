@@ -1,7 +1,7 @@
 {
   "name": "room-booking-ui",
   "private": true,
-  "version": "1.0.4-rc.0",
+  "version": "1.0.5-rc.0",
   "type": "module",
   "description": "Room Booking Display",
   "homepage": "https://github.com/elomagic/room-booking-ui",
