@@ -94,9 +94,11 @@ export default function MainView() {
                 </Fab>
             </Link>
 
-            <Snackbar open={snackbarText != null} autoHideDuration={4000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: "top", horizontal: "center" }} >
+            <Snackbar open={snackbarText != null}
+                      autoHideDuration={4000}
+                      onClose={handleSnackbarClose}
+                      anchorOrigin={{ vertical: "top", horizontal: "center" }} >
                 <Alert
-                    onClose={handleSnackbarClose}
                     severity="error"
                     variant="filled"
                     sx={{ width: '100%' }}>
