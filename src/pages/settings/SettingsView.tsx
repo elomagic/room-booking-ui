@@ -157,6 +157,7 @@ export default function SettingsView() {
                                     <TextField
                                         label={t("resource-id")}
                                         value={resourceId}
+                                        type="email"
                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setResourceId(event.target.value)}
                                     />
                                 </FormControl>
@@ -201,6 +202,7 @@ export default function SettingsView() {
                             <TextField
                                 label={t("name")}
                                 value={name}
+                                type="text"
                                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
                             />
                         </FormControl>
