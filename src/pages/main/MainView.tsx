@@ -51,7 +51,7 @@ export default function MainView() {
     }
 
     useEffect(() => {
-        if (localStorage.getItem("rb.ext.api") == null) {
+        if (localStorage.getItem("rb.productiveMode") == null) {
             setOpenSettingsDialog(true);
         }
 

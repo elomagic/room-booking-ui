@@ -45,7 +45,7 @@ export default function SettingsView() {
     const [screenCastSupport, setScreenCastSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.screenCastSupport") ?? "false"));
     const [webCameraSupport, setWebCameraSupport] = useState<boolean>("true" === (localStorage.getItem("rb.room.webCameraSupport") ?? "false"));
 
-    const [api, setApi] = useState<string>(localStorage.getItem("rb.ext.api") ?? "demo");
+    const [productiveMode, setProductiveMode] = useState<boolean>("true" === (localStorage.getItem("rb.productiveMode") ?? "false"));
     const [apiKey, setApiKey] = useState<string>(passwordPlaceholder);
     const [resourceId, setResourceId] = useState<string>(localStorage.getItem("rb.ext.resourceId") ?? "");
 
@@ -78,8 +78,8 @@ export default function SettingsView() {
 
     const handleTestClick = () => {
         setSnackbarText(null);
-        createProviderApi(api)
-            .testConfiguration(passwordPlaceholder == apiKey ? localStorage.getItem("rb.ext.apiKey") ?? "demo" : apiKey, resourceId)
+        createProviderApi(productiveMode)
+            .testConfiguration(passwordPlaceholder == apiKey ? localStorage.getItem("rb.ext.apiKey") ?? "no-key-set" : apiKey, resourceId)
             .then(() => {
                 setSnackbarSeverity("success")
                 setSnackbarText(t("successful"));
@@ -119,7 +119,8 @@ export default function SettingsView() {
         localStorage.setItem("rb.room.webCameraSupport", webCameraSupport ? "true" : "false");
         localStorage.setItem("rb.language", language);
 
-        localStorage.setItem("rb.ext.api", api);
+        localStorage.setItem("rb.productiveMode", productiveMode ? "true": "false");
+
         if (passwordPlaceholder !== apiKey) {
             localStorage.setItem("rb.ext.apiKey", apiKey);
             setApiKey(passwordPlaceholder);
@@ -139,21 +140,17 @@ export default function SettingsView() {
                     <h2>{t("integration")}</h2>
 
                     <Stack direction="column" spacing={2}>
-                        <FormControl fullWidth>
-                            <InputLabel id="language-label-id">{t("api")}</InputLabel>
-                            <Select
-                                labelId="anguage-label-id"
-                                label={t("api")}
-                                color="primary"
-                                value={api}
-                                onChange={(event: SelectChangeEvent) => setApi(event.target.value)}
-                                variant="outlined">
-                                <MenuItem value="demo">{t("demo-mode")}</MenuItem>
-                                <MenuItem value="ews-proxy">Microsoft EWS</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={!productiveMode}
+                                    onChange={(_event: React.SyntheticEvent, checked: boolean) => setProductiveMode(!checked)}
+                                />
+                            }
+                            label={t("demo-mode")}
+                        />
 
-                        {api == "ews-proxy" && (
+                        {productiveMode && (
                             <React.Fragment>
                                 <FormControl fullWidth>
                                     <TextField

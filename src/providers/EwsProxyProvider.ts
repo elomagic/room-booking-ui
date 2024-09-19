@@ -4,7 +4,7 @@ import {getReasonPhrase} from "http-status-codes";
 export class EwsProxyProvider extends AppointmentProvider {
 
     baseUrl = localStorage.getItem("rb.ext.url") ?? "";
-    apiKey = localStorage.getItem("rb.ext.apiKey") ?? "demo";
+    apiKey = localStorage.getItem("rb.ext.apiKey") ?? "no-key-set";
     resourceId = localStorage.getItem("rb.ext.resourceId") ?? "0";
 
     createHeaders(): Headers {
