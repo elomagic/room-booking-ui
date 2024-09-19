@@ -25,7 +25,7 @@ export default function PinDialog(props: Readonly<PinDialogProps>) {
 
     useEffect(() => {
         setError(props.error);
-    }, [props]);
+    }, [props.error]);
 
     const handlePinChangeClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         setError(false);
@@ -37,7 +37,7 @@ export default function PinDialog(props: Readonly<PinDialogProps>) {
     };
 
     const handleOkClick = () => {
-        props.onClick && props.onClick(true, pin);
+        props.onClick(true, pin);
     }
 
     return (

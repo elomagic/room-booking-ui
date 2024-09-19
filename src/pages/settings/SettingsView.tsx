@@ -61,6 +61,7 @@ export default function SettingsView() {
     };
 
     const handlePinClick = (okClick: boolean, pin: string | null) => {
+        setPinError(false);
         if (okClick && pin !== null) {
             createProvider()
                 .validatePin(pin)
@@ -94,19 +95,19 @@ export default function SettingsView() {
     }
 
     useEffect(() => {
+        createProvider()
+            .getBackendVersion()
+            .then((dto) => {
+                setBackendVersion(dto.version);
+            }, (err) => {
+                setSnackbarSeverity("error")
+                setSnackbarText(err.message);
+            });
 
         if (location.hash != null) {
             handlePinClick(true, location.hash.substring(1));
         } else {
             setSnackbarText(null);
-            createProvider()
-                .getBackendVersion()
-                .then((dto) => {
-                    setBackendVersion(dto.version);
-                }, (err) => {
-                    setSnackbarSeverity("error")
-                    setSnackbarText(err.message);
-                });
         }
     }, []);
 
