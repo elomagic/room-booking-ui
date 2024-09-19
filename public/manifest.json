@@ -1,0 +1,15 @@
+{
+  "short_name": "Room Booking Display",
+  "name": "Room Booking Display",
+  "icons": [
+    {
+      "src": "/calendar.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "fullscreen",
+  "theme_color": "#a0a0a0",
+  "background_color": "#000000"
+}
